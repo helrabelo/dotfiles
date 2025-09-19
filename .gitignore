@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+
+# Secrets - NEVER commit these
+.env
+.env.*
+.git-credentials
+.netrc
+.npmrc
+.wakatime.cfg
+.boto
+
+# History files
+.zsh_history
+.bash_history
+.lesshst
+.python_history
+
+# Temporary/Cache
+*.log
+*.cache
+*.tmp

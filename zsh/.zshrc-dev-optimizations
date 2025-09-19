@@ -1,0 +1,41 @@
+# Development Workflow Optimizations
+
+# Quick navigation aliases
+alias work="cd ~/Code/work"
+alias planet="cd ~/Code/work/planetary"
+alias plain="cd ~/Code/work/plainsight"
+alias personal="cd ~/Code/personal"
+
+# Project-specific shortcuts
+alias dtf="cd ~/Code/work/planetary/din-tai-fung-website"
+alias portal="cd ~/Code/work/plainsight/client-portal"
+alias api="cd ~/Code/work/plainsight/plainsight-api"
+alias wishare="cd ~/Code/personal/wishare"
+
+# Clean up node_modules in current directory
+alias clean-npm="find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +"
+
+# Install dependencies only when needed
+alias npm-smart="[ -f package.json ] && [ ! -d node_modules ] && npm install"
+
+# Git status for all repos in current directory
+alias git-status-all="find . -name .git -type d -prune -exec sh -c 'cd \"\${0%/.git}\" && echo \"===== \$(basename \"\$(pwd)\") =====\" && git status -s' {} \;"
+
+# Remove DS_Store files
+alias clean-ds="find . -name '.DS_Store' -type f -delete"
+
+# Check disk usage of current project
+alias project-size="du -sh . && echo '---' && du -sh node_modules 2>/dev/null || echo 'No node_modules'"
+
+# Function to cd and list
+function cdl() {
+    cd "$1" && ls -la
+}
+
+# Function to quickly clone and setup a project
+function dev-clone() {
+    git clone "$1" && cd "$(basename "$1" .git)" && [ -f package.json ] && npm install
+}
+
+# Add to your .zshrc:
+# source ~/.zshrc-dev-optimizations
