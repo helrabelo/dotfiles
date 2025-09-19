@@ -1,7 +1,7 @@
-# Claude Instructions for Helena Rabelo
+# Claude Instructions for Hel Rabelo
 
 ## Professional Profile
-Helena is a Senior Frontend Developer rapidly transitioning to Full-Stack and System Architecture roles. She operates across multiple professional contexts:
+Hel is a Senior Frontend Developer rapidly transitioning to Full-Stack and System Architecture roles. He operates across multiple professional contexts:
 
 ### Primary Roles
 1. **Planetary (Digital Agency)** - Senior Lead Developer
@@ -55,6 +55,10 @@ Helena is a Senior Frontend Developer rapidly transitioning to Full-Stack and Sy
 ### Daily Log Format
 Each daily entry should include:
 - Date and context (Planetary/Plainsight/Personal)
+- Format: "For [Company] on [Project]: [Task description]"
+  - Company: Planetary, Plainsight, Personal
+  - Project: DTF, The Well, Client Portal, Wishare, System, etc.
+  - Include: Problem → Process → Result
 - Key tasks completed
 - Technical decisions made
 - Blockers encountered and resolutions
