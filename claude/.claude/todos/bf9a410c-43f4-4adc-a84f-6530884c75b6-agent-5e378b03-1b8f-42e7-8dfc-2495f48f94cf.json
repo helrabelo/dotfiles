@@ -1,0 +1,27 @@
+[
+  {
+    "content": "Design comprehensive Obsidian vault structure with folder hierarchy",
+    "status": "completed",
+    "activeForm": "Designing comprehensive Obsidian vault structure with folder hierarchy"
+  },
+  {
+    "content": "Create automation scripts for CLAUDE.md scanning and log compilation",
+    "status": "in_progress",
+    "activeForm": "Creating automation scripts for CLAUDE.md scanning and log compilation"
+  },
+  {
+    "content": "Implement slash command system for project-specific and review commands",
+    "status": "pending",
+    "activeForm": "Implementing slash command system for project-specific and review commands"
+  },
+  {
+    "content": "Create daily/weekly/monthly log templates and automation",
+    "status": "pending",
+    "activeForm": "Creating daily/weekly/monthly log templates and automation"
+  },
+  {
+    "content": "Set up data flow integration between CLAUDE.md files and Obsidian vault",
+    "status": "pending",
+    "activeForm": "Setting up data flow integration between CLAUDE.md files and Obsidian vault"
+  }
+]

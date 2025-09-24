@@ -1,0 +1,27 @@
+[
+  {
+    "content": "Fix critical React Hooks rules violations across components",
+    "status": "completed",
+    "activeForm": "Fixed critical React Hooks rules violations"
+  },
+  {
+    "content": "Add missing TypeScript return type annotations",
+    "status": "in_progress",
+    "activeForm": "Adding missing TypeScript return type annotations"
+  },
+  {
+    "content": "Fix useless JSX fragments",
+    "status": "pending",
+    "activeForm": "Fixing useless JSX fragments"
+  },
+  {
+    "content": "Fix remaining TypeScript and code quality issues",
+    "status": "pending",
+    "activeForm": "Fixing remaining TypeScript and code quality issues"
+  },
+  {
+    "content": "Verify zero linting errors and clean build",
+    "status": "pending",
+    "activeForm": "Verifying zero linting errors and clean build"
+  }
+]

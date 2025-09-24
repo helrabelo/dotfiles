@@ -1,0 +1,27 @@
+[
+  {
+    "content": "Focus on remaining linter issues (1,133 problems: 232 errors, 901 warnings)",
+    "status": "in_progress",
+    "activeForm": "Focusing on remaining linter issues (1,133 problems: 232 errors, 901 warnings)"
+  },
+  {
+    "content": "Continue with build verification after linter completion",
+    "status": "pending",
+    "activeForm": "Continuing with build verification after linter completion"
+  },
+  {
+    "content": "Achieve 100% unit test coverage",
+    "status": "pending",
+    "activeForm": "Achieving 100% unit test coverage"
+  },
+  {
+    "content": "Achieve 100% E2E test pass rate",
+    "status": "pending",
+    "activeForm": "Achieving 100% E2E test pass rate"
+  },
+  {
+    "content": "Document enterprise testing suite completion",
+    "status": "pending",
+    "activeForm": "Documenting enterprise testing suite completion"
+  }
+]

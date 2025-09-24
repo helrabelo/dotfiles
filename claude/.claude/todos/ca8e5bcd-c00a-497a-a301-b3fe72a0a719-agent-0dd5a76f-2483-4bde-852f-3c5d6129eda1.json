@@ -1,0 +1,52 @@
+[
+  {
+    "content": "Write comprehensive tests for StandardCard component with all variants",
+    "status": "completed",
+    "activeForm": "Writing tests for StandardCard component"
+  },
+  {
+    "content": "Write comprehensive tests for StandardModal component with all variants",
+    "status": "completed",
+    "activeForm": "Writing tests for StandardModal component"
+  },
+  {
+    "content": "Write comprehensive tests for StandardTable component with all features",
+    "status": "completed",
+    "activeForm": "Writing tests for StandardTable component"
+  },
+  {
+    "content": "Write tests for useOrganizations React Query hook",
+    "status": "completed",
+    "activeForm": "Writing tests for useOrganizations hook"
+  },
+  {
+    "content": "Write tests for useProjects React Query hook",
+    "status": "completed",
+    "activeForm": "Writing tests for useProjects hook"
+  },
+  {
+    "content": "Write tests for useModels React Query hook",
+    "status": "completed",
+    "activeForm": "Writing tests for useModels hook"
+  },
+  {
+    "content": "Write integration tests for user authentication flow",
+    "status": "completed",
+    "activeForm": "Writing integration tests for authentication"
+  },
+  {
+    "content": "Write integration tests for organization switching workflow",
+    "status": "completed",
+    "activeForm": "Writing integration tests for organization switching"
+  },
+  {
+    "content": "Write integration tests for project creation workflow",
+    "status": "completed",
+    "activeForm": "Writing integration tests for project creation"
+  },
+  {
+    "content": "Run test suite and verify all tests pass with coverage targets",
+    "status": "in_progress",
+    "activeForm": "Running test suite and verifying coverage"
+  }
+]

@@ -64,3 +64,5 @@ default = current
 	program = /usr/local/bin/gpg
 [init]
 	defaultBranch = main
+[credential]
+	helper = osxkeychain

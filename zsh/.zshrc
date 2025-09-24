@@ -225,3 +225,6 @@ eval "$(direnv hook zsh)"
 # Development tools configuration
 source ~/.zshrc-tools
 export PATH="$HOME/bin:$PATH"
+
+# Helsky Vault aliases
+source ~/.helsky-vault-aliases

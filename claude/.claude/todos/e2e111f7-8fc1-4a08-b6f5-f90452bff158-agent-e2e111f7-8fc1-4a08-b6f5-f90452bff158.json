@@ -1,0 +1,42 @@
+[
+  {
+    "content": "Complete smoke test tagging for critical user journeys",
+    "status": "completed",
+    "activeForm": "Completing smoke test tagging for critical user journeys"
+  },
+  {
+    "content": "Fix failing smoke tests (selector issues)",
+    "status": "pending",
+    "activeForm": "Fixing failing smoke tests (selector issues)"
+  },
+  {
+    "content": "Remove redundant dashboard navigation tests",
+    "status": "completed",
+    "activeForm": "Removing redundant dashboard navigation tests"
+  },
+  {
+    "content": "Remove redundant training management tests",
+    "status": "completed",
+    "activeForm": "Removing redundant training management tests"
+  },
+  {
+    "content": "Reduce organization-settings.spec.ts from 20+ to 2 critical tests",
+    "status": "completed",
+    "activeForm": "Reducing organization-settings.spec.ts from 20+ to 2 critical tests"
+  },
+  {
+    "content": "Reduce user-management.spec.ts from 20+ to 4 critical tests",
+    "status": "completed",
+    "activeForm": "Reducing user-management.spec.ts from 20+ to 4 critical tests"
+  },
+  {
+    "content": "Reduce filter-library-navigation.spec.ts from 15+ to 2 critical tests",
+    "status": "completed",
+    "activeForm": "Reducing filter-library-navigation.spec.ts from 15+ to 2 critical tests"
+  },
+  {
+    "content": "Check current E2E test count to assess reduction progress",
+    "status": "completed",
+    "activeForm": "Checking current E2E test count to assess reduction progress"
+  }
+]

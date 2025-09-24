@@ -1,0 +1,27 @@
+[
+  {
+    "content": "Fix conditional useColorModeValue hook violations in critical files",
+    "status": "in_progress",
+    "activeForm": "Fixing conditional useColorModeValue hook violations"
+  },
+  {
+    "content": "Address TypeScript compilation errors and missing return types",
+    "status": "pending",
+    "activeForm": "Addressing TypeScript compilation errors"
+  },
+  {
+    "content": "Fix React Hooks exhaustive-deps issues",
+    "status": "pending",
+    "activeForm": "Fixing React Hooks dependency issues"
+  },
+  {
+    "content": "Remove console statements and clean up code quality issues",
+    "status": "pending",
+    "activeForm": "Removing console statements"
+  },
+  {
+    "content": "Run final linter check and document progress",
+    "status": "pending",
+    "activeForm": "Running final linter verification"
+  }
+]

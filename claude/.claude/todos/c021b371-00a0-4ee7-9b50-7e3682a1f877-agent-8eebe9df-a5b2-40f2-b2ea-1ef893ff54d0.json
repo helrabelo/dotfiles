@@ -1,0 +1,32 @@
+[
+  {
+    "content": "Create Mega Menu implementation plan from Figma designs",
+    "status": "in_progress",
+    "activeForm": "Analyzing Figma mega menu structure"
+  },
+  {
+    "content": "Design Sanity schemas for new mega menu navigation",
+    "status": "pending",
+    "activeForm": "Creating navigation schemas"
+  },
+  {
+    "content": "Implement Vue components for mega menu rendering",
+    "status": "pending",
+    "activeForm": "Building Vue mega menu components"
+  },
+  {
+    "content": "Map Zenoti IDs to location/service/product content",
+    "status": "pending",
+    "activeForm": "Linking Zenoti IDs in schemas"
+  },
+  {
+    "content": "Complete pageModules migration for content foundation",
+    "status": "in_progress",
+    "activeForm": "Finalizing pageModules import"
+  },
+  {
+    "content": "Prepare showcase-ready website with simplified architecture",
+    "status": "pending",
+    "activeForm": "Polishing for presentation"
+  }
+]

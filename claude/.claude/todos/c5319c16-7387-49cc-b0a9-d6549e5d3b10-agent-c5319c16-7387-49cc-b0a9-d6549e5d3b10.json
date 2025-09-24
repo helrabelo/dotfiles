@@ -1,0 +1,52 @@
+[
+  {
+    "content": "Add data-testid attributes to auth components",
+    "status": "completed",
+    "activeForm": "Adding data-testid attributes to auth components"
+  },
+  {
+    "content": "Add data-testid to login form",
+    "status": "completed",
+    "activeForm": "Adding data-testid to login form"
+  },
+  {
+    "content": "Add data-testid to logout flow components",
+    "status": "completed",
+    "activeForm": "Adding data-testid to logout flow components"
+  },
+  {
+    "content": "Add data-testid to password reset form",
+    "status": "completed",
+    "activeForm": "Adding data-testid to password reset form"
+  },
+  {
+    "content": "Add data-testid to invite user modal",
+    "status": "completed",
+    "activeForm": "Adding data-testid to invite user modal"
+  },
+  {
+    "content": "Add data-testid to accept invite form",
+    "status": "completed",
+    "activeForm": "Adding data-testid to accept invite form"
+  },
+  {
+    "content": "Add data-testid to password fields",
+    "status": "completed",
+    "activeForm": "Adding data-testid to password fields"
+  },
+  {
+    "content": "Debug login redirect timeout issue",
+    "status": "in_progress",
+    "activeForm": "Debugging login redirect timeout issue"
+  },
+  {
+    "content": "Check auth-helpers login flow",
+    "status": "pending",
+    "activeForm": "Checking auth-helpers login flow"
+  },
+  {
+    "content": "Verify user-menu data-testid exists",
+    "status": "pending",
+    "activeForm": "Verifying user-menu data-testid exists"
+  }
+]

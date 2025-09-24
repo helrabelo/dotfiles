@@ -1,0 +1,17 @@
+[
+  {
+    "content": "Analyze differences between simple and enterprise fixtures",
+    "status": "completed",
+    "activeForm": "Analyzing differences between simple and enterprise fixtures"
+  },
+  {
+    "content": "Create corrected fixtures_enterprise.sql based on simple version",
+    "status": "in_progress",
+    "activeForm": "Creating corrected fixtures_enterprise.sql based on simple version"
+  },
+  {
+    "content": "Apply the corrected enterprise fixtures to local database",
+    "status": "pending",
+    "activeForm": "Applying the corrected enterprise fixtures to local database"
+  }
+]
