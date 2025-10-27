@@ -228,3 +228,7 @@ export PATH="$HOME/bin:$PATH"
 
 # Helsky Vault aliases
 source ~/.helsky-vault-aliases
+export PATH="$HOME/.local/bin:$PATH"
+
+# zoxide - smarter cd command
+eval "$(zoxide init zsh)"
