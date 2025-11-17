@@ -4,6 +4,9 @@
 # Claude internal files - NEVER commit
 claude/.claude/projects/
 claude/.claude/shell-snapshots/
+claude/.claude/debug
+claude/.claude/file-history
+claude/.claude/todos
 .claude/projects/
 .claude/shell-snapshots/
 

@@ -14,3 +14,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 # Added by OrbStack: command-line tools and integration
 # This won't be added again if you remove it.
 source ~/.orbstack/shell/init.zsh 2>/dev/null || :
+# Load nvm for non-interactive shells
+export NVM_DIR="/Users/helrabelo/.nvm"
+[ -s "/Users/helrabelo/.nvm/nvm.sh" ] && . "/Users/helrabelo/.nvm/nvm.sh"
+[ -s "/Users/helrabelo/.nvm/bash_completion" ] && . "/Users/helrabelo/.nvm/bash_completion"
