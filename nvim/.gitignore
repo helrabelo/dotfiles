@@ -1,0 +1,8 @@
+# Ignore lazy.nvim lock file (optional - some prefer to track it)
+# lazy-lock.json
+
+# Ignore spell files
+spell/
+
+# Ignore session files
+sessions/

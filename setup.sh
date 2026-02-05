@@ -3,7 +3,7 @@
 # Dotfiles Setup Script
 # This script creates symlinks from home directory to dotfiles repo
 
-DOTFILES_DIR="$HOME/Code/dotfiles"
+DOTFILES_DIR="$HOME/code/dotfiles"
 
 echo "=== Setting up dotfiles ==="
 echo "Dotfiles directory: $DOTFILES_DIR"
@@ -47,6 +47,12 @@ echo ""
 echo "Setting up Claude configuration..."
 link_file "$DOTFILES_DIR/claude/CLAUDE.md" "$HOME/CLAUDE.md"
 link_file "$DOTFILES_DIR/claude/.claude" "$HOME/.claude"
+
+# Neovim configuration (LazyVim)
+echo ""
+echo "Setting up Neovim configuration..."
+mkdir -p "$HOME/.config"
+link_file "$DOTFILES_DIR/nvim" "$HOME/.config/nvim"
 
 # Scripts
 echo ""
