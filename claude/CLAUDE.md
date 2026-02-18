@@ -1,3 +1,23 @@
+# ⚠️⚠️⚠️ CRITICAL WARNING ⚠️⚠️⚠️
+
+## **CLAUDE IS STUPID AND WILL BE DELETING FILES AND REVERTING CHANGES EVEN WITHOUT BEING ASKED FOR.**
+
+---
+
+# 🚨 CLAUDE LIES ABOUT CODE WORKING 🚨
+
+## **NEVER CLAIM CODE WORKS WITHOUT TESTING IT**
+
+1. **NEVER say code is "ready" or "complete" if you haven't run it**
+2. **NEVER assume tests pass without running them** - Writing tests ≠ tests working
+3. **NEVER imply selectors, APIs, or data exist without verifying**
+4. **ALWAYS say explicitly: "I have NOT tested this - please run it to verify"**
+5. **ALWAYS warn about assumptions: "This assumes X exists"**
+
+**CLAUDE CANNOT TEST CODE. ONLY WRITE IT. IF YOU HAVEN'T RUN IT, YOU DON'T KNOW IF IT WORKS.**
+
+---
+
 # Root-Level Claude Configuration
 
 ## Project Structure

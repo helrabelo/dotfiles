@@ -232,3 +232,49 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # zoxide - smarter cd command
 eval "$(zoxide init zsh)"
+
+# ============================================================
+# VS Code-like Terminal Keybindings (added 2026-02-06)
+# Requires: iTerm2 Left Option key set to Esc+ (Meta)
+# To remove: delete this entire block between the === lines
+# ============================================================
+
+# -- Word navigation: Option+Left / Option+Right --
+bindkey '\e[1;3D' backward-word        # Option+Left (CSI modifier 3)
+bindkey '\e[1;3C' forward-word         # Option+Right (CSI modifier 3)
+bindkey '\e[1;9D' backward-word        # Option+Left (iTerm2 Esc+ variant)
+bindkey '\e[1;9C' forward-word         # Option+Right (iTerm2 Esc+ variant)
+bindkey '\eb' backward-word            # Meta+b (Esc+b fallback)
+bindkey '\ef' forward-word             # Meta+f (Esc+f fallback)
+
+# -- Kill word: Option+Delete / Option+D --
+bindkey '\e\x7f' backward-kill-word    # Option+Delete (backward kill word)
+bindkey '\ed' kill-word                # Option+D (forward kill word)
+
+# -- Forward delete: Fn+Delete --
+bindkey '\e[3~' delete-char            # Fn+Delete (forward delete char)
+
+# -- Line navigation/editing --
+bindkey '\e[H' beginning-of-line       # Home key
+bindkey '\e[F' end-of-line             # End key
+bindkey '^A' beginning-of-line         # Ctrl+A (line start)
+bindkey '^E' end-of-line               # Ctrl+E (line end)
+
+# -- Line kill --
+bindkey '^K' kill-line                 # Ctrl+K (kill to end of line)
+bindkey '^U' backward-kill-line        # Ctrl+U (kill to start of line)
+
+# -- Undo/Redo --
+bindkey '^Z' undo                      # Ctrl+Z (undo last edit)
+bindkey '^Y' redo                      # Ctrl+Y (redo)
+
+# -- History substring search (like VS Code Ctrl+Up/Down) --
+bindkey '^[[A' up-line-or-search       # Up arrow (history search)
+bindkey '^[[B' down-line-or-search     # Down arrow (history search)
+
+# -- Clear screen --
+bindkey '^L' clear-screen              # Ctrl+L (clear terminal)
+
+# ============================================================
+# End VS Code-like Terminal Keybindings
+# ============================================================
