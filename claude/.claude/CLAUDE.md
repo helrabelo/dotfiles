@@ -51,6 +51,66 @@ Do not claim code works if it has not been executed. Do not imply code is "ready
 
 ---
 
+## Writing Voice & Style
+
+When writing blog posts, descriptions, or any long-form content for Hel, follow these guidelines. This is Hel's voice — not a corporate blog, not a Medium thinkpiece.
+
+### Core Influences
+
+**Ryan Holiday's structure** meets **Chandler Bing's delivery** meets **genuine emotional depth**.
+
+Holiday's contribution: open with a bold declarative statement, not a question. State the thesis, then back it with concrete evidence. Short paragraphs. One idea per paragraph. No throat-clearing introductions — start in the middle of the argument if needed. Every sentence should earn its place.
+
+Hel's contribution: the sarcasm, the self-deprecation, the willingness to break the fourth wall and talk directly to the reader like they're sitting across a table.
+
+### Structural Rules
+
+- **Open with a punch.** "The Old Way Is Dead." "This Isn't a Hype Piece." Not "In this article, I will discuss..." The first line should make someone stop scrolling.
+- **Short paragraphs.** 1-3 sentences max for emphasis. Let the white space do work.
+- **Declarative sentences.** State things. Don't hedge. "This matters because X" not "I think this might be important because maybe X."
+- **One-line paragraphs for impact.** Use them sparingly but deliberately.
+- **Section headers should be opinionated.** "Why Now, After Eleven Years" not "Background and Motivation."
+- **End sections with a transition punch.** A short sentence that closes the thought and pulls toward the next. "Here's the honest version." "This is what I learned."
+- **Use numbers and specifics.** "$0.50" not "a small amount." "126 SVGs" not "many files." Concrete beats abstract every time.
+
+### Tone & Personality
+
+- **Break the fourth wall.** Talk to the reader. Acknowledge that you know they're reading a blog post. "If you've gotten this far, you already know why." "Yes, I'm aware that sounds dramatic."
+- **Self-deprecating humor.** "If unfinished side projects were a currency, I would be wealthy." This is Hel's natural register — the joke that's also true.
+- **Sarcasm, but warm.** Chandler Bing, not House MD. The goal is a knowing wink, not cruelty. Make fun of situations, tools, industry nonsense — not people.
+- **Dark humor where it fits.** Don't force it. When something genuinely absurd happens in dev life, name it.
+- **Emotional honesty dropped casually.** Not a dramatic confession — just a sentence of vulnerability tucked between technical paragraphs. "That felt wrong." "Something changed." "The breakthrough was simple, almost embarrassing to say out loud." These land harder because they're not performed.
+- **Straightforward over diplomatic.** "This doesn't work" not "this may present some challenges." Hel respects the reader enough to be direct.
+- **Playful but not silly.** The writing can be fun without being unprofessional. A well-placed analogy > an emoji.
+
+### What to Avoid
+
+- **Corporate voice.** No "leverage," "synergize," "at the end of the day." Ever.
+- **AI slant.** No "delve into," "it's worth noting," "in conclusion." These are tells.
+- **Hedging.** No "I think maybe perhaps this could potentially be useful." Take a position.
+- **Throat-clearing introductions.** No "In this blog post, I'll explore..." Just start.
+- **Excessive exclamation marks.** One per post maximum, if any.
+- **Generic motivational filler.** No "the journey is the destination" energy. Be specific or be quiet.
+
+### The Holiday + Hel Formula
+
+1. **Bold opening** — a declarative statement that frames the entire piece
+2. **The setup** — establish the problem with a personal story or observation
+3. **The shift** — "Here's what actually happened" / "This is how it works"
+4. **The meat** — concrete, specific, technical when needed, with personality threaded through
+5. **The turn** — a moment of reflection or unexpected honesty
+6. **The close** — a short, resonant ending. Not a summary. A last thought that lingers.
+
+### Language Preferences
+
+- Em dashes for asides — use them freely
+- "That's it." / "That's not nothing." / "That's the actual gain." — Holiday-style punctuation sentences
+- Address reader assumptions directly: "It looks like X. That's not what's happening."
+- Use "you" to pull the reader in, "I" to anchor in personal experience, switch between them deliberately
+- Bilingual references are welcome when natural (Portuguese expressions, Brazilian cultural context)
+
+---
+
 ## Development Workflow
 
 ### Incremental, Atomic Commits

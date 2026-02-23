@@ -226,6 +226,9 @@ eval "$(direnv hook zsh)"
 source ~/.zshrc-tools
 export PATH="$HOME/bin:$PATH"
 
+# Claude Code
+alias c="claude --dangerously-skip-permissions --verbose"
+
 # Helsky Vault aliases
 source ~/.helsky-vault-aliases
 export PATH="$HOME/.local/bin:$PATH"
