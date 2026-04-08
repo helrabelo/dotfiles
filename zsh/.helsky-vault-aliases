@@ -1,0 +1,100 @@
+#!/bin/bash
+# Helsky Vault Shell Aliases
+# Add to your ~/.zshrc or ~/.bashrc: source ~/.helsky-vault-aliases
+
+# Core paths
+export HELSKY_VAULT="/Users/helrabelo/helsky-vault"
+export HELSKY_SCRIPTS="$HELSKY_VAULT/06 System/Scripts"
+
+# Project context switching
+alias dtf="node $HELSKY_SCRIPTS/helsky-vault-cli.js dtf"
+alias client-portal="node $HELSKY_SCRIPTS/helsky-vault-cli.js client-portal"
+alias plainsight-api="node $HELSKY_SCRIPTS/helsky-vault-cli.js plainsight-api"
+alias wishare="node $HELSKY_SCRIPTS/helsky-vault-cli.js wishare"
+alias the-well="node $HELSKY_SCRIPTS/helsky-vault-cli.js the-well"
+alias days-as-numbers="node $HELSKY_SCRIPTS/helsky-vault-cli.js days-as-numbers"
+alias system="node $HELSKY_SCRIPTS/helsky-vault-cli.js system"
+
+# Context management
+alias hv-context="node $HELSKY_SCRIPTS/helsky-vault-cli.js context"
+alias hv-status="node $HELSKY_SCRIPTS/helsky-vault-cli.js status"
+alias hv-auto="node $HELSKY_SCRIPTS/helsky-vault-cli.js auto"
+
+# Logging commands
+alias hv-log="node $HELSKY_SCRIPTS/helsky-vault-cli.js log"
+alias hv-quick="node $HELSKY_SCRIPTS/helsky-vault-cli.js log-quick"
+
+# Brag Book
+alias hv-brag="node \"$HELSKY_SCRIPTS/brag-book.js\""
+alias hv-brag-week="node \"$HELSKY_SCRIPTS/brag-book.js\" --range week"
+alias hv-brag-month="node \"$HELSKY_SCRIPTS/brag-book.js\" --range month"
+
+# Review generation
+alias hv-daily="node $HELSKY_SCRIPTS/helsky-vault-cli.js daily-review"
+alias hv-weekly="node $HELSKY_SCRIPTS/helsky-vault-cli.js weekly-review"
+alias hv-monthly="node $HELSKY_SCRIPTS/helsky-vault-cli.js monthly-review"
+
+# Vault navigation
+alias hv-open="open -a 'Obsidian' $HELSKY_VAULT"
+alias hv-logs="cd $HELSKY_VAULT && find . -name 'Daily' -type d"
+
+# Quick functions
+hv-today() {
+    local context_status=$(node $HELSKY_SCRIPTS/helsky-vault-cli.js status 2>/dev/null)
+    if echo "$context_status" | grep -q "No active context"; then
+        echo "⚠️  No active context set. Use /[context-name] to switch first."
+        echo "Available contexts: /dtf, /client-portal, /wishare, /the-well, /system"
+        return 1
+    fi
+
+    local today_log=$(echo "$context_status" | grep "Today's Log:" | sed 's/.*Today'\''s Log: //')
+    if [ -f "$today_log" ]; then
+        echo "📖 Opening today's log: $today_log"
+        open -a "Obsidian" "$today_log"
+    else
+        echo "📝 No log file exists for today yet"
+        node $HELSKY_SCRIPTS/helsky-vault-cli.js log
+    fi
+}
+
+hv-summary() {
+    echo "🎯 HELSKY VAULT QUICK SUMMARY"
+    echo "=============================="
+    node $HELSKY_SCRIPTS/helsky-vault-cli.js status
+    echo ""
+    echo "💡 Quick commands: hv-log, hv-quick, hv-daily, hv-status"
+}
+
+# Help function
+hv-help() {
+    echo "🎯 HELSKY VAULT COMMANDS"
+    echo "======================"
+    echo ""
+    echo "📋 CONTEXT SWITCHING:"
+    echo "  /dtf, /client-portal, /wishare, /the-well, /system"
+    echo ""
+    echo "🔍 CONTEXT MANAGEMENT:"
+    echo "  hv-context     - List all contexts"
+    echo "  hv-status      - Show current status"
+    echo "  hv-auto        - Auto-detect context"
+    echo ""
+    echo "📝 LOGGING:"
+    echo "  hv-log         - Interactive activity log"
+    echo "  hv-quick 'msg' - Quick log entry"
+    echo ""
+    echo "📊 BRAG BOOK:"
+    echo "  hv-brag        - Generate today's brag book entry"
+    echo "  hv-brag-week   - Generate entries for the current week"
+    echo "  hv-brag-month  - Generate entries for the current month"
+    echo ""
+    echo "📊 REVIEWS:"
+    echo "  hv-daily       - Generate daily review"
+    echo "  hv-weekly      - Generate weekly review"
+    echo "  hv-monthly     - Generate monthly review"
+    echo ""
+    echo "🚀 UTILITIES:"
+    echo "  hv-today       - Open today's log"
+    echo "  hv-summary     - Quick status summary"
+    echo "  hv-open        - Open Obsidian vault"
+    echo "  hv-help        - Show this help"
+}

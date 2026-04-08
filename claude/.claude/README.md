@@ -103,14 +103,11 @@ The system recognizes activities in this format within CLAUDE.md files:
 
 ### Supported Companies
 - **Planetary** - Digital agency projects (DTF, The Well, Burlington, etc.)
-- **Plainsight** - Computer vision startup projects (Client Portal, API)
 - **Personal** - Independent projects (Wishare, etc.)
 
 ### Common Project Abbreviations
 - **DTF** - Din Tai Fung website
 - **The Well** - The Well CMS and client projects
-- **Client Portal** - Plainsight client portal frontend
-- **Plainsight API** - Backend API integration
 - **Wishare** - Personal project
 
 ## 📂 Directory Structure
@@ -124,9 +121,7 @@ The system automatically scans these locations:
 │   │   ├── din-tai-fung-website/CLAUDE.md
 │   │   ├── the-well/CLAUDE.md
 │   │   └── */CLAUDE.md
-│   └── plainsight/         # Plainsight projects
 │       ├── client-portal/CLAUDE.md
-│       ├── plainsight-api/CLAUDE.md
 │       └── */CLAUDE.md
 └── personal/               # Personal projects
     ├── wishare/CLAUDE.md
@@ -144,7 +139,7 @@ Daily logs are generated as:
 ```markdown
 # Daily Log - September 23, 2025
 
-## For Plainsight
+## For Planetary
 
 ### Complete TypeScript compilation error resolution
 **Project**: Client Portal
@@ -153,7 +148,7 @@ Daily logs are generated as:
 **Process**: Systematically resolved each compilation error...
 **Result**: Achieved zero TypeScript compilation errors...
 
-*Source: Code/work/plainsight/client-portal/CLAUDE.md*
+*Source: Example project CLAUDE.md*
 
 ## For Planetary
 
@@ -276,7 +271,7 @@ daily-log --week
 
 ### Entry Requirements
 - **Date**: Must be in YYYY-MM-DD format
-- **Company**: One of Planetary, Plainsight, Personal
+- **Company**: One of Planetary, Helsky Labs, Personal
 - **Project**: Clear project identifier
 - **Title**: Descriptive activity title
 - **Problem**: What challenge was addressed

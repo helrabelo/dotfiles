@@ -35,6 +35,8 @@ echo "Setting up shell configuration..."
 link_file "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
 link_file "$DOTFILES_DIR/zsh/.zprofile" "$HOME/.zprofile"
 link_file "$DOTFILES_DIR/zsh/.zshrc-dev-optimizations" "$HOME/.zshrc-dev-optimizations"
+link_file "$DOTFILES_DIR/zsh/.zshrc-tools" "$HOME/.zshrc-tools"
+link_file "$DOTFILES_DIR/zsh/.helsky-vault-aliases" "$HOME/.helsky-vault-aliases"
 
 # Git configuration
 echo ""
@@ -47,6 +49,12 @@ echo ""
 echo "Setting up Claude configuration..."
 link_file "$DOTFILES_DIR/claude/CLAUDE.md" "$HOME/CLAUDE.md"
 link_file "$DOTFILES_DIR/claude/.claude" "$HOME/.claude"
+
+# Ghostty configuration
+echo ""
+echo "Setting up Ghostty configuration..."
+mkdir -p "$HOME/.config/ghostty"
+link_file "$DOTFILES_DIR/ghostty/config" "$HOME/.config/ghostty/config"
 
 # Neovim configuration (LazyVim)
 echo ""

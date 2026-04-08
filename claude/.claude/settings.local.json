@@ -45,7 +45,6 @@
       "Bash(npx vitest run:*)",
       "Bash(npx playwright test:*)",
       "SlashCommand(/client-portal)",
-      "SlashCommand(/plainsight-api)",
       "Bash(mdfind:*)",
       "Bash(brew list:*)",
       "Bash(brew install:*)",

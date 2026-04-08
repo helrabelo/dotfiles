@@ -236,6 +236,108 @@ export PATH="$HOME/.local/bin:$PATH"
 # zoxide - smarter cd command
 eval "$(zoxide init zsh)"
 
+# iTerm2 Shell Integration
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+# ============================================================
+# iTerm2 + Claude Code Integration (added 2026-03-14)
+# ============================================================
+
+# -- Project color mapping (RGB 0-255 for escape sequences) --
+typeset -A HELSKY_PROJECT_COLORS
+HELSKY_PROJECT_COLORS=(
+  falavra           "155:89:182"
+  dropvox           "52:152:219"
+  tokencentric      "230:126:34"
+  tokencap          "241:196:15"
+  gitography        "46:204:113"
+  bespoke-cv        "26:188:156"
+  get-ready-for-work "231:76:60"
+  helsky-labs-dashboard "52:73:94"
+  helsky-labs-site  "255:107:107"
+  daysasnumbers-app "255:105:180"
+  bookbit           "211:84:0"
+  snapstride        "39:174:96"
+)
+
+# -- Detect current project from pwd --
+_helsky_project_name() {
+  local dir="$PWD"
+  if [[ "$dir" == "$HOME/code/helsky-labs/"* ]]; then
+    echo "${dir#$HOME/code/helsky-labs/}" | cut -d/ -f1
+  fi
+}
+
+# -- Set iTerm2 tab color from RGB string "R:G:B" --
+_iterm2_set_tab_color() {
+  local rgb="$1"
+  local r="${rgb%%:*}"; rgb="${rgb#*:}"
+  local g="${rgb%%:*}"
+  local b="${rgb#*:}"
+  printf "\x1B]6;1;bg;red;brightness;%s\x07" "$r"
+  printf "\x1B]6;1;bg;green;brightness;%s\x07" "$g"
+  printf "\x1B]6;1;bg;blue;brightness;%s\x07" "$b"
+}
+
+# -- Reset tab color to project default --
+_iterm2_reset_tab_color() {
+  local project="$(_helsky_project_name)"
+  if [[ -n "$project" && -n "${HELSKY_PROJECT_COLORS[$project]}" ]]; then
+    _iterm2_set_tab_color "${HELSKY_PROJECT_COLORS[$project]}"
+  else
+    printf "\x1B]6;1;bg;*;default\x07"
+  fi
+}
+
+# -- Set tab title --
+_iterm2_set_tab_title() {
+  printf "\x1B]1;%s\x07" "$1"
+}
+
+# -- precmd: reset tab color + update title on each prompt --
+_helsky_precmd() {
+  _iterm2_reset_tab_color
+  local project="$(_helsky_project_name)"
+  if [[ -n "$project" ]]; then
+    _iterm2_set_tab_title "$project"
+  fi
+}
+precmd_functions+=(_helsky_precmd)
+
+# -- iTerm2 user-defined variables --
+iterm2_print_user_vars() {
+  iterm2_set_user_var project "$(_helsky_project_name)"
+}
+
+# -- Helper: open new iTerm2 tab for a project --
+claude-tab() {
+  local project="${1:?Usage: claude-tab <project-name> [label]}"
+  local label="${2:-}"
+  local dir="$HOME/code/helsky-labs/$project"
+  if [[ ! -d "$dir" ]]; then
+    echo "Project not found: $dir" >&2
+    return 1
+  fi
+  local tab_title="$project"
+  if [[ -n "$label" ]]; then
+    tab_title="${project}-${label}"
+  fi
+  osascript <<APPLESCRIPT
+    tell application "iTerm2"
+      tell current window
+        set newTab to (create tab with profile "HL: $project")
+        tell current session of newTab
+          set name to "$tab_title"
+        end tell
+      end tell
+    end tell
+APPLESCRIPT
+}
+
+# ============================================================
+# End iTerm2 + Claude Code Integration
+# ============================================================
+
 # ============================================================
 # VS Code-like Terminal Keybindings (added 2026-02-06)
 # Requires: iTerm2 Left Option key set to Esc+ (Meta)
@@ -281,3 +383,21 @@ bindkey '^L' clear-screen              # Ctrl+L (clear terminal)
 # ============================================================
 # End VS Code-like Terminal Keybindings
 # ============================================================
+
+# ============================================================
+# Clipboard Image Paste (added 2026-03-18)
+# ============================================================
+pi() {
+  local file="/tmp/clipboard-$(date +%s).png"
+  osascript -e "set png to the clipboard as «class PNGf»" -e "set referenceNumber to open for access \"$file\" with write permission" -e "write png to referenceNumber" -e "close access referenceNumber" 2>/dev/null
+  if [[ -f "$file" && -s "$file" ]]; then
+    echo "✓ Image saved: $file"
+  else
+    rm -f "$file"
+    echo "✗ No image in clipboard"
+    return 1
+  fi
+}
+
+# Added by Antigravity
+export PATH="/Users/helrabelo/.antigravity/antigravity/bin:$PATH"

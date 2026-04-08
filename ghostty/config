@@ -1,0 +1,13 @@
+# Ghostty Configuration
+theme = Dracula+
+font-size = 24
+
+# Word navigation: opt+arrow moves by word
+keybind = alt+left=esc:b
+keybind = alt+right=esc:f
+
+# Word deletion: opt+backspace deletes last word
+keybind = alt+backspace=backward_kill_word
+
+# Paste image from clipboard: cmd+shift+v saves to file
+keybind = cmd+shift+v=send_text:pi\r

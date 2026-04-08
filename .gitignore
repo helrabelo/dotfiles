@@ -22,6 +22,11 @@ claude/.claude/plugins/marketplaces/
 claude/.claude/plugins/install-counts-cache.json
 claude/.claude/plugins/installed_plugins.json
 claude/.claude/plugins/known_marketplaces.json
+claude/.claude/plugins/blocklist.json
+claude/.claude/backups/
+claude/.claude/sessions/
+claude/.claude/downloads/
+claude/.claude/session-env/
 .claude/projects/
 .claude/shell-snapshots/
 

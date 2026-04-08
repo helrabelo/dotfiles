@@ -9,6 +9,7 @@
 [core]
 	editor = code --wait
 	excludesfile = /Users/helrabelo/.gitignore_global
+	hooksPath = /Users/helrabelo/.git-hooks
 
 [push]
 default = current
