@@ -23,6 +23,7 @@ claude/.claude/plugins/install-counts-cache.json
 claude/.claude/plugins/installed_plugins.json
 claude/.claude/plugins/known_marketplaces.json
 claude/.claude/plugins/blocklist.json
+claude/.claude/mcp-needs-auth-cache.json
 claude/.claude/backups/
 claude/.claude/sessions/
 claude/.claude/downloads/
