@@ -7,7 +7,8 @@ keybind = alt+left=esc:b
 keybind = alt+right=esc:f
 
 # Word deletion: opt+backspace deletes last word
-keybind = alt+backspace=backward_kill_word
+# esc:\x7f sends ESC+DEL, which .zshrc's `bindkey '\e\x7f' backward-kill-word` catches
+keybind = alt+backspace=esc:\x7f
 
-# Paste image from clipboard: cmd+shift+v saves to file
-keybind = cmd+shift+v=send_text:pi\r
+# Paste image from clipboard: cmd+shift+v types the `pi` function + enter
+keybind = cmd+shift+v=text:pi\r
