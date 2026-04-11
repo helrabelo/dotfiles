@@ -106,7 +106,7 @@ source $ZSH/oh-my-zsh.sh
 
 #kubectl completitions
 
-source <(kubectl completion zsh)
+command -v kubectl >/dev/null 2>&1 && source <(kubectl completion zsh)
 
 PATH="$HOME/anaconda/bin:$PATH"
 
@@ -160,7 +160,7 @@ export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-toolsexport PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
+command -v jenv >/dev/null 2>&1 && eval "$(jenv init -)"
 export PATH=$PATH:/opt/homebrew/share/android-commandlinetools/emulator/
 
 export NVM_DIR="$HOME/.nvm"
@@ -182,7 +182,7 @@ export PATH="/Users/helrabelo/Library/Python/3.9/bin:$PATH"
 # alias pip=pip3
 export PATH="$HOME/.poetry/bin:$PATH"
 
-source "$HOME/.rye/env"
+[ -f "$HOME/.rye/env" ] && source "$HOME/.rye/env"
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/helrabelo/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/helrabelo/Downloads/google-cloud-sdk/path.zsh.inc'; fi
 
@@ -400,3 +400,5 @@ pi() {
 
 # Added by Antigravity
 export PATH="/Users/helrabelo/.antigravity/antigravity/bin:$PATH"
+
+[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"  # uv (Mini)
