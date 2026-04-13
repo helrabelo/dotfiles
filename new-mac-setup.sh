@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ============================================================
-# Mac Mini Setup Script — AyeEye Workstation
+# New Mac Setup Script
 # Run this on a fresh macOS with username "helrabelo"
 #
 # Prerequisites:
@@ -9,16 +9,16 @@
 #   2. Open Terminal.app
 #   3. Run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 #   4. Clone this repo: git clone <dotfiles-repo> ~/code/dotfiles
-#   5. Run this script: bash ~/code/dotfiles/mac-mini-setup.sh
+#   5. Run this script: bash ~/code/dotfiles/new-mac-setup.sh
 # ============================================================
 
 set -e
 
-echo "=== Mac Mini Setup: AyeEye Workstation ==="
+echo "=== New Mac Setup ==="
 echo ""
 
 # ------------------------------------------------------------------
-# 1. Homebrew packages (essential dev tools only — keep Mini lean)
+# 1. Homebrew packages (essential dev tools only)
 # ------------------------------------------------------------------
 echo ">>> Installing Homebrew packages..."
 
@@ -40,6 +40,7 @@ brew install --cask orbstack       # Docker alternative (lightweight)
 brew install --cask ngrok
 brew install --cask swiftbar       # Menu bar plugin runner (for helsky swiftbar-plugins)
 brew install --cask bentobox       # Window manager (replaces Rectangle)
+brew install --cask alfred         # Spotlight replacement (auto-updates)
 brew install --cask helsky-labs/tap/tokencap  # Claude Code usage meter
 
 echo ""
@@ -309,14 +310,14 @@ echo "MANUAL STEPS REMAINING:"
 echo ""
 echo "  1. APPS TO INSTALL MANUALLY:"
 echo "     - Ghostty:        https://ghostty.org"
-echo "     - VS Code/Cursor: https://code.visualstudio.com"
+echo "     - Antigravity:    https://antigravity.google"
+echo "     - Codex:          https://github.com/openai/codex (npm i -g @openai/codex)"
 echo "     - Slack:           App Store"
 echo "     - 1Password:       App Store"
 echo "     - Logi Options+:   https://www.logitech.com/en-us/software/logi-options-plus.html"
 echo "     - Obsidian:        https://obsidian.md"
-echo "     - Alfred 5:        https://www.alfredapp.com"
 echo ""
-echo "     (BentoBox, SwiftBar, TokenCap auto-install via brew cask above)"
+echo "     (Alfred, BentoBox, SwiftBar, TokenCap auto-install via brew cask above)"
 echo ""
 echo "  2. AUTHENTICATION:"
 echo "     - claude auth login"

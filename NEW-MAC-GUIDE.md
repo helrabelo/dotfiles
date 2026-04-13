@@ -1,7 +1,8 @@
-# Mac Mini Setup Guide — Step by Step
+# New Mac Setup Guide — Step by Step
 
-This is a manual walkthrough for setting up the Mac Mini M4 as your AyeEye workstation.
-Do these steps in order. Each section depends on the previous one.
+This is a manual walkthrough for setting up a fresh macOS machine (most recently
+used for the Mac Mini M4 AyeEye workstation). Do these steps in order — each
+section depends on the previous one.
 
 ---
 
@@ -157,7 +158,7 @@ git remote set-url origin git@github.com:helrabelo/dotfiles.git
 
 ```bash
 cd ~/code/dotfiles
-bash mac-mini-setup.sh
+bash new-mac-setup.sh
 ```
 
 This installs everything automated: Homebrew packages, Oh My Zsh, nvm, Node, Python
@@ -187,13 +188,14 @@ These can't be automated (App Store, DMGs, or license-gated):
 | App | URL | Notes |
 |-----|-----|-------|
 | **Ghostty** | https://ghostty.org | Your terminal. Config is already symlinked. |
-| **VS Code** | https://code.visualstudio.com | Or Cursor if you prefer |
+| **Antigravity** | https://antigravity.google | Primary code editor |
+| **Codex** | `npm i -g @openai/codex` | CLI coding agent |
 | **Logi Options+** | https://www.logitech.com/en-us/software/logi-options-plus.html | For MX keyboard/mouse |
-| **Alfred 5** | https://www.alfredapp.com | Spotlight replacement |
 | **Obsidian** | https://obsidian.md | For Helsky Vault (if syncing) |
 | **1Password (desktop)** | https://1password.com/downloads | Browser extension + SSH agent |
 
-### Auto-installed by `mac-mini-setup.sh` (brew cask)
+### Auto-installed by `new-mac-setup.sh` (brew cask)
+- **Alfred** — Spotlight replacement (auto-updates to latest)
 - **BentoBox** — window manager (replaces Rectangle)
 - **SwiftBar** — menu bar plugin runner; plugins symlinked from `~/swiftbar-plugins`
 - **TokenCap** — Claude Code usage meter
@@ -306,22 +308,7 @@ npm run build  # or equivalent
 
 ---
 
-## Phase 12: VS Code Settings Sync
-
-VS Code has built-in settings sync:
-
-1. Open VS Code on Mac Mini
-2. Click the person icon (bottom left) > "Turn on Settings Sync"
-3. Sign in with your GitHub account (same as MacBook)
-4. Choose what to sync: Settings, Keybindings, Extensions, UI State
-5. All your VS Code extensions and preferences will download automatically
-
-This means your VS Code environment is identical on both machines without
-any manual configuration.
-
----
-
-## Phase 13: Final Verification Checklist
+## Phase 12: Final Verification Checklist
 
 Run through this on the Mac Mini to confirm everything works:
 
