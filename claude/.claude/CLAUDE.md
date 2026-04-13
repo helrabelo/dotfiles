@@ -333,3 +333,54 @@ claude mcp list
 # Test Serena
 uv run --directory /Users/helrabelo/serena serena --help
 ```
+
+---
+
+## Email Handling
+
+When the user mentions email in any form (reading, searching, drafting, replying, sending), use the Gmail MCP tools (`mcp__claude_ai_Gmail__*`) by default. Do not propose manual Gmail workflows, copy-paste into the browser, or ask the user to send something themselves when the MCP can do it.
+
+### Reading and drafting
+
+Use the Gmail MCP for:
+
+- Searching and reading messages (`gmail_search_messages`, `gmail_read_message`, `gmail_read_thread`)
+- Creating drafts inside an existing thread (`gmail_create_draft` with `threadId`)
+- Listing labels, drafts, and thread metadata
+
+### Sending with attachments
+
+The Gmail MCP cannot attach files to drafts. When an email needs an attachment, use the local CLI instead:
+
+`~/code/tooling/email-sender/send.py`
+
+This is a Python script that sends via Gmail SMTP using credentials from its own `.env`. It supports everything the MCP is missing: attachments, HTML bodies, CC/BCC, dry-run previews.
+
+Usage pattern:
+
+```bash
+python3 ~/code/tooling/email-sender/send.py \
+  --to "recipient@example.com" \
+  --subject "Subject line" \
+  --body-file /tmp/body.txt \
+  --attachment /path/to/file.pdf \
+  --dry-run
+```
+
+CLI flags:
+
+- `--to`, `--cc`, `--bcc` (each accepts multiple values)
+- `--subject` (required)
+- `--body` or `--body-file` (one of the two required)
+- `--html` to send the body as HTML instead of plain text
+- `--attachment` (repeatable, one flag per file)
+- `--dry-run` to preview without sending
+- `--env` to override the default `.env` path
+
+Rules:
+
+1. Always run with `--dry-run` first when the recipient is external. Show the user the dry-run output and get confirmation before the real send.
+2. For bodies longer than one line, write the body to a temp file and use `--body-file`. Keeps shell quoting sane and avoids escaping hell.
+3. The `--html` flag is for HTML bodies. Default is plain text.
+4. Multiple `--attachment` flags are allowed for multi-file sends.
+5. This sends directly, not as a draft. Treat it with the same caution as `git push`: visible to the outside world, not fully reversible. Confirm before firing.
