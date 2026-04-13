@@ -189,10 +189,15 @@ These can't be automated (App Store, DMGs, or license-gated):
 | **Ghostty** | https://ghostty.org | Your terminal. Config is already symlinked. |
 | **VS Code** | https://code.visualstudio.com | Or Cursor if you prefer |
 | **Logi Options+** | https://www.logitech.com/en-us/software/logi-options-plus.html | For MX keyboard/mouse |
-| **Rectangle Pro** | https://rectangleapp.com/pro | Window management |
 | **Alfred 5** | https://www.alfredapp.com | Spotlight replacement |
 | **Obsidian** | https://obsidian.md | For Helsky Vault (if syncing) |
 | **1Password (desktop)** | https://1password.com/downloads | Browser extension + SSH agent |
+
+### Auto-installed by `mac-mini-setup.sh` (brew cask)
+- **BentoBox** — window manager (replaces Rectangle)
+- **SwiftBar** — menu bar plugin runner; plugins symlinked from `~/swiftbar-plugins`
+- **TokenCap** — Claude Code usage meter
+- **InputSwitch** — Logitech MX + Dell DDC channel switcher, cloned to `~/InputSwitch` and built via `./build.sh` into `/Applications/InputSwitch.app`
 
 ### 1Password Setup (Important)
 1. Install 1Password from App Store

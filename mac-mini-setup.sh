@@ -38,6 +38,9 @@ brew install gnupg pinentry-mac pngpaste imagemagick
 brew install --cask 1password-cli
 brew install --cask orbstack       # Docker alternative (lightweight)
 brew install --cask ngrok
+brew install --cask swiftbar       # Menu bar plugin runner (for helsky swiftbar-plugins)
+brew install --cask bentobox       # Window manager (replaces Rectangle)
+brew install --cask helsky-labs/tap/tokencap  # Claude Code usage meter
 
 echo ""
 
@@ -202,7 +205,51 @@ fi
 echo ""
 
 # ------------------------------------------------------------------
-# 11. macOS preferences (match MacBook)
+# 11. Helsky Labs menu bar apps (SwiftBar plugins + InputSwitch)
+# ------------------------------------------------------------------
+# TokenCap is installed via brew cask above. SwiftBar is too — but the
+# plugins repo and InputSwitch need to be cloned and wired in manually.
+# Requires SSH keys from Phase 5; failures here don't abort the script.
+echo ">>> Setting up Helsky Labs menu bar apps..."
+
+# --- SwiftBar plugins (clone + symlink each plugin into SwiftBar dir) ---
+if [ ! -d "$HOME/swiftbar-plugins" ]; then
+    echo "  Cloning swiftbar-plugins..."
+    git clone git@github.com:helsky-labs/swiftbar-plugins.git "$HOME/swiftbar-plugins" \
+        || echo "  ⚠️  swiftbar-plugins clone failed — check SSH keys, re-run later"
+fi
+
+PLUGIN_DIR="$HOME/Library/Application Support/SwiftBar/Plugins"
+if [ -d "$HOME/swiftbar-plugins" ]; then
+    mkdir -p "$PLUGIN_DIR"
+    for plugin in "$HOME/swiftbar-plugins"/*.sh; do
+        [ -f "$plugin" ] || continue
+        name="$(basename "$plugin")"
+        target="$PLUGIN_DIR/$name"
+        if [ ! -L "$target" ]; then
+            ln -sf "$plugin" "$target"
+            echo "  ✓ Linked $name → SwiftBar"
+        fi
+    done
+    echo "  Note: set SwiftBar's plugin folder to $PLUGIN_DIR on first launch"
+fi
+
+# --- InputSwitch (Logitech MX + Dell DDC channel switcher) ---
+# build.sh auto-installs to /Applications and kills any running instance.
+if [ ! -d "$HOME/InputSwitch" ]; then
+    echo "  Cloning InputSwitch..."
+    if git clone git@github.com:helsky-labs/InputSwitch.git "$HOME/InputSwitch"; then
+        ( cd "$HOME/InputSwitch" && ./build.sh ) \
+            || echo "  ⚠️  InputSwitch build failed — run ./build.sh manually"
+    else
+        echo "  ⚠️  InputSwitch clone failed — check SSH keys, re-run later"
+    fi
+fi
+
+echo ""
+
+# ------------------------------------------------------------------
+# 12. macOS preferences (match MacBook)
 # ------------------------------------------------------------------
 echo ">>> Applying macOS preferences..."
 
@@ -241,7 +288,7 @@ killall Finder 2>/dev/null || true
 echo ""
 
 # ------------------------------------------------------------------
-# 12. Project setup
+# 13. Project setup
 # ------------------------------------------------------------------
 echo ">>> Setting up project directories..."
 
@@ -265,10 +312,11 @@ echo "     - Ghostty:        https://ghostty.org"
 echo "     - VS Code/Cursor: https://code.visualstudio.com"
 echo "     - Slack:           App Store"
 echo "     - 1Password:       App Store"
-echo "     - Rectangle Pro:   https://rectangleapp.com/pro"
 echo "     - Logi Options+:   https://www.logitech.com/en-us/software/logi-options-plus.html"
 echo "     - Obsidian:        https://obsidian.md"
 echo "     - Alfred 5:        https://www.alfredapp.com"
+echo ""
+echo "     (BentoBox, SwiftBar, TokenCap auto-install via brew cask above)"
 echo ""
 echo "  2. AUTHENTICATION:"
 echo "     - claude auth login"
