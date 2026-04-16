@@ -2,12 +2,12 @@
 
 ## Project Structure
 My development projects are organized as follows:
-- `/Users/helrabelo/code/work/planetary/` - All Planetary agency projects
+- `/Users/helrabelo/code/planetary/` - All Planetary agency projects
 - `/Users/helrabelo/code/personal/` - Personal projects (Wishare, etc.)
 
 ## Active Projects Quick Access
-- DTF: `/Users/helrabelo/code/work/planetary/din-tai-fung-website`
-- The Well: `/Users/helrabelo/code/work/planetary/the-well`
+- DTF: `/Users/helrabelo/code/planetary/din-tai-fung-website`
+- The Well: `/Users/helrabelo/code/planetary/the-well`
 - Wishare: `/Users/helrabelo/code/personal/wishare`
 
 ## Performance Notes
@@ -24,8 +24,8 @@ My development projects are organized as follows:
 
 ## Daily Log Structure
 Track activities in project-specific CLAUDE.md files:
-- Planetary: `/Users/helrabelo/code/work/planetary/CLAUDE.md`
-- The Well: `/Users/helrabelo/code/work/planetary/the-well/CLAUDE.md`
+- Planetary: `/Users/helrabelo/code/planetary/CLAUDE.md`
+- The Well: `/Users/helrabelo/code/planetary/the-well/CLAUDE.md`
 - Personal: `/Users/helrabelo/code/personal/CLAUDE.md`
 
 ## MCP Servers

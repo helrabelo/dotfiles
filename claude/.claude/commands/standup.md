@@ -77,9 +77,9 @@ Store the final date as `SINCE_DATE` for use in git commands.
 Scan the following project directories for commits since `SINCE_DATE`:
 
 ### Planetary Projects
-- `/Users/helrabelo/code/work/planetary/din-tai-fung-website`
-- `/Users/helrabelo/code/work/planetary/the-well`
-- Any other projects with recent activity in `/Users/helrabelo/code/work/planetary/`
+- `/Users/helrabelo/code/planetary/din-tai-fung-website`
+- `/Users/helrabelo/code/planetary/the-well`
+- Any other projects with recent activity in `/Users/helrabelo/code/planetary/`
 
 ### Helsky Labs
 - `/Users/helrabelo/code/helsky-labs/` and subdirectories

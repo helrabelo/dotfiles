@@ -57,7 +57,7 @@ Provide ticket ID (e.g., `DTF-123`, `WELL-456`) or "no ticket" for ad-hoc work.
    - Use conventional commits: `feat:`, `fix:`, `chore:`, `docs:`, `refactor:`
    - Reference ticket in commit message when applicable
 
-2. **Prepare PR content** following the template at `~/code/work/planetary/.github/.github/PULL_REQUEST_TEMPLATE.md`:
+2. **Prepare PR content** following the template at `~/code/planetary/.github/.github/PULL_REQUEST_TEMPLATE.md`:
 
    ```markdown
    ## Ticket
