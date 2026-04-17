@@ -389,89 +389,118 @@ uv run --directory /Users/helrabelo/serena serena --help
 
 ## Email Handling
 
-When the user mentions email in any form (reading, searching, drafting, replying, sending), use the Gmail MCP tools (`mcp__claude_ai_Gmail__*`) by default. Do not propose manual Gmail workflows, copy-paste into the browser, or ask the user to send something themselves when the MCP can do it.
+Use `claude-gmail` for every email task: searching, reading, sending, replying, labeling, drafting. It is a single CLI with subcommands, OAuth-authed against Gmail, installed via `uv tool install` so the binary is on `PATH` from any directory.
 
-### Reading and drafting
+Prefer `claude-gmail` over the `mcp__claude_ai_Gmail__*` MCP. The MCP is fine for casual reads; the CLI wins on any workflow that mutates state (send, reply, label, draft, archive) because it logs every write to the vault, threads replies correctly, handles attachments, and runs on machines where the MCP is unavailable (the Mini).
 
-Use the Gmail MCP for:
-
-- Searching and reading messages (`gmail_search_messages`, `gmail_read_message`, `gmail_read_thread`)
-- Creating drafts inside an existing thread (`gmail_create_draft` with `threadId`)
-- Listing labels, drafts, and thread metadata
-
-### Local Gmail CLI tool
-
-The canonical location for Gmail credentials and Gmail CLI scripts is:
+### Where things live
 
 ```
-~/code/tooling/email-sender/
-  .env          # SMTP_USER + SMTP_PASS (Gmail app password, works for both SMTP send and IMAP read)
-  send.py       # Send email via SMTP (attachments, HTML, CC/BCC)
-  fetch.py      # Read email via IMAP (search, list, download attachments)
+~/code/tooling/claude-gmail/         # source repo
+  .env                                # GOOGLE_CLIENT_ID + GOOGLE_CLIENT_SECRET + SMTP_USER + SMTP_FROM (gitignored)
+~/.config/claude-gmail/token.json     # OAuth token (0600, per-machine, not synced)
+~/helsky-vault/contexts/helrabelo/claude-gmail/ACTIVITY_LOG.md   # canonical write log
+~/helsky-vault/contexts/<tag>/ACTIVITY_LOG.md                    # mirror log when --context <tag>
 ```
 
-The same app password in `.env` authenticates both SMTP (outgoing) and IMAP (incoming). Do not duplicate credentials elsewhere. If a new Gmail-adjacent script is needed, source from this `.env`.
+Repo: `git@github.com:helsky-labs/claude-gmail.git` (private). One `.env` serves the whole CLI. Do not duplicate credentials elsewhere. If a new Gmail-adjacent script is needed, make it a subcommand of `claude-gmail` and source from this `.env`.
 
-### Sending with attachments via `send.py`
-
-The Gmail MCP cannot attach files to drafts. When an email needs an attachment, use the local CLI:
+### Install
 
 ```bash
-python3 ~/code/tooling/email-sender/send.py \
-  --to "recipient@example.com" \
-  --subject "Subject line" \
-  --body-file /tmp/body.txt \
-  --attachment /path/to/file.pdf \
-  --dry-run
+uv tool install git+ssh://git@github.com/helsky-labs/claude-gmail.git
+ln -s ~/code/tooling/claude-gmail/.env ~/.config/claude-gmail/.env
+claude-gmail auth init      # one-time per machine
 ```
 
-CLI flags:
+`uv tool install` drops the binary at `~/.local/bin/claude-gmail`. The tool looks up `.env` in this order: `$CLAUDE_GMAIL_ENV`, `~/.config/claude-gmail/.env`, `$CWD/.env`, `<repo>/.env`. The symlink step makes `claude-gmail` work from any directory without needing to `cd` into the repo checkout. Per machine (Mini + MacBook), not synced.
 
-- `--to`, `--cc`, `--bcc` (each accepts multiple values)
-- `--subject` (required)
-- `--body` or `--body-file` (one of the two required)
-- `--html` to send the body as HTML instead of plain text
-- `--attachment` (repeatable, one flag per file)
-- `--dry-run` to preview without sending
-- `--env` to override the default `.env` path
+Upgrading: `uv tool upgrade claude-gmail` pulls the latest tip from the git URL it was installed from.
 
-Rules:
-
-1. Always run with `--dry-run` first when the recipient is external. Show the user the dry-run output and get confirmation before the real send.
-2. For bodies longer than one line, write the body to a temp file and use `--body-file`. Keeps shell quoting sane and avoids escaping hell.
-3. The `--html` flag is for HTML bodies. Default is plain text.
-4. Multiple `--attachment` flags are allowed for multi-file sends.
-5. This sends directly, not as a draft. Treat it with the same caution as `git push`: visible to the outside world, not fully reversible. Confirm before firing.
-
-### Reading / downloading attachments via `fetch.py`
-
-The Gmail MCP (`mcp__claude_ai_Gmail__*`) returns message bodies and attachment *metadata* but cannot download attachment *binaries*. When the task needs the actual file contents (PDF, docx, image, etc.), use the local IMAP fetcher:
+### Auth
 
 ```bash
-# List messages matching a query (use full Gmail search syntax, quotes OK)
-python3 ~/code/tooling/email-sender/fetch.py \
-  --query 'subject:"AyeEye_Hel_Brief_v2" from:michaeljbrown844@gmail.com' \
-  --list-only
-
-# Download attachments matching a filename substring into ~/Downloads
-python3 ~/code/tooling/email-sender/fetch.py \
-  --query 'subject:"Cosmos_Rewrite"' \
-  --save-attachments ~/Downloads \
-  --name-filter Cosmos_Rewrite
+claude-gmail auth init      # one-time browser consent; writes ~/.config/claude-gmail/token.json
+claude-gmail auth status    # prints current token validity window
 ```
 
-CLI flags:
+OAuth consent screen is still in Testing mode, so refresh tokens expire every 7 days. Re-run `auth init` weekly on each machine. Tokens are per-machine; do not copy `token.json` between Mini and MacBook.
 
-- `--query` (required): full Gmail search syntax via the `X-GM-RAW` IMAP extension
-- `--max N`: cap matches returned (default 5)
-- `--list-only`: print sender/date/subject/attachment list, download nothing
-- `--save-attachments DIR`: write attachment files into DIR
-- `--name-filter SUBSTR`: only save attachments whose filename contains SUBSTR (case-insensitive)
-- `--mailbox "[Gmail]/All Mail"`: override IMAP mailbox
-- `--env PATH`: override the `.env` location
+### Subcommands at a glance
 
-Notes:
+```bash
+# Search (X-GM-RAW syntax, same as Gmail web search box)
+claude-gmail search --query 'from:michaeljbrown844@gmail.com after:2026/04/10' --max 10 --output json
 
-- Uses `imaplib` + Gmail's `X-GM-RAW` extension. The query is sent as an IMAP literal, so quoted phrases in queries work correctly.
-- Read-only: `SELECT` is issued with `readonly=True`, so this cannot modify the mailbox.
-- The Gmail MCP should still be preferred for *searching* and *reading bodies* (richer output, citations). Reach for `fetch.py` specifically when you need the attachment bytes on disk.
+# Read a message or whole thread
+claude-gmail read --message-id 1862693203238879021
+claude-gmail read --thread-id 1862378355102103196 --output json
+claude-gmail read --message-id 1862598093174965663 --save-attachments ~/Downloads
+
+# Send
+claude-gmail send --to recipient@example.com --subject "Subject" --body-file /tmp/body.txt \
+  --attachment /path/to/file.pdf --dry-run
+
+# Reply inside a thread (thread-aware In-Reply-To + References)
+claude-gmail reply --message-id 1862693203238879021 --body-file /tmp/reply.txt \
+  --reply-all --context ayeeye --dry-run
+
+# Labels (list/add/remove/replace; system and user labels alike)
+claude-gmail label list --thread-id 1862378355102103196
+claude-gmail label add --thread-id 1862378355102103196 claude/ayeeye-brief
+claude-gmail label remove --thread-id 1862378355102103196 "\\Inbox"   # archive
+claude-gmail label replace --message-id 1862693203238879021 "\\Inbox" claude/tracked
+
+# Drafts (create/list/send)
+claude-gmail draft create --to recipient@example.com --subject "Subject" --body-file /tmp/body.txt
+claude-gmail draft create --thread-id 1862378355102103196 --body-file /tmp/reply.txt --dry-run
+claude-gmail draft list
+claude-gmail draft send --draft-id 1862712821079536397 --dry-run
+```
+
+Flags worth knowing:
+
+- `--to`, `--cc`, `--bcc` accept multiple values on `send` and `draft create`.
+- `--body` or `--body-file` (one required on `send` / `reply` / `draft create`).
+- `--html` sends the body as HTML. Default is plain text.
+- `--attachment` is repeatable on `send`, `reply`, and `draft create`.
+- `--dry-run` renders the MIME (or intended STORE command) without writing, sending, or logging.
+- `--no-log` performs the real action but skips the write log.
+- `--context <tag>` mirrors the log line to a work context (see below).
+- `--reply-all` on `reply` unions parent `To` and `Cc` minus self.
+- `read --save-attachments DIR` downloads attachment bytes (`--name-filter` narrows by filename substring).
+
+### The action log
+
+Every successful write appends one greppable ISO-timestamped line to the canonical log at `~/helsky-vault/contexts/helrabelo/claude-gmail/ACTIVITY_LOG.md`. Dry runs and `--no-log` skip the write.
+
+When `--context <tag>` is passed, the same line is mirrored to a second log under the work context. The tag is a colon-separated path rooted at `~/helsky-vault/contexts/`:
+
+- `--context ayeeye` writes to `contexts/ayeeye/ACTIVITY_LOG.md`
+- `--context planetary:dtf` writes to `contexts/planetary/dtf/ACTIVITY_LOG.md`
+- `--context helsky-labs:bookbit` writes to `contexts/helsky-labs/bookbit/ACTIVITY_LOG.md`
+
+No alias translation. Segments map one-to-one onto folder names under `contexts/`. If the first segment does not exist the mirror errors and the canonical write still succeeds. Parent dirs for nested segments are auto-created.
+
+No auto-detection from thread content. Pass `--context` explicitly when an action belongs to a work context.
+
+### The dry-run ritual (mandatory for outbound)
+
+Before every real outbound (`send`, `reply`, `draft send`) to any external recipient:
+
+1. Run the command with `--dry-run`. Review the MIME preview.
+2. Show the user the dry-run output and get explicit confirmation.
+3. Re-run without `--dry-run`.
+
+This is the same safety posture as `git push`: visible externally, not fully reversible. `draft create` is not bound by this ritual because it writes to `\Drafts` only (no SMTP), but `draft send` is.
+
+For bodies longer than one line, write to a temp file and pass `--body-file`. Keeps shell quoting sane.
+
+### When to still reach for the Gmail MCP
+
+Two cases:
+
+- Quick casual reads in a conversation where the MCP's formatted output and citations are genuinely more useful than piping `claude-gmail read --output json` through the model.
+- Anything the CLI does not yet cover. File an issue in the repo, do not spin up a one-off script.
+
+For every write (send, reply, label, draft, archive), prefer the CLI. The log matters.
