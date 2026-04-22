@@ -426,6 +426,10 @@ claude-gmail auth status    # prints current token validity window
 
 OAuth consent screen is still in Testing mode, so refresh tokens expire every 7 days. Re-run `auth init` weekly on each machine. Tokens are per-machine; do not copy `token.json` between Mini and MacBook.
 
+### Identity check before mutating
+
+Before any `send`, `reply`, or `draft send`, confirm the session is operating under the expected Gmail account. The user is `helrabelo@gmail.com`. If a session handoff references a different account, stop and ask before sending, replying, or flipping a draft to sent. `claude-gmail auth status` prints the bot identity; match it against the work context before the dry-run, not after.
+
 ### Subcommands at a glance
 
 ```bash
@@ -504,3 +508,124 @@ Two cases:
 - Anything the CLI does not yet cover. File an issue in the repo, do not spin up a one-off script.
 
 For every write (send, reply, label, draft, archive), prefer the CLI. The log matters.
+
+### Hex to decimal conversion
+
+Gmail MCP surfaces hex thread and message IDs. IMAP uses decimal `X-GM-THRID` / `X-GM-MSGID`. When crossing the two (e.g. porting an MCP-originated workflow into `claude-gmail`):
+
+```bash
+python3 -c "print(int('<hex>', 16))"
+```
+
+Less frequent now that the CLI is the default surface, but still the right helper when the MCP is the source of the ID.
+
+### Hard rules for email operations (quick reference)
+
+- `auth status` first on any session that will `send`, `reply`, or `draft send`.
+- Identity check: confirm `helrabelo@gmail.com` is the active Gmail account before mutating.
+- `--dry-run` first on every `send`, `reply`, `draft send` to an external recipient. Wait for explicit go-ahead.
+- `--context <tag>` when the work belongs to a known context so the per-context `ACTIVITY_LOG.md` gets the mirror entry.
+- Never copy `token.json` between machines. Each machine runs its own `auth init`.
+
+---
+
+## Notion Handling
+
+When the user mentions Notion in any form (reading, searching, fetching a page or database, creating or updating pages, querying databases, adding comments), use the `claude-notion` CLI exclusively. **The Notion MCP tools (`mcp__notion__*`, `mcp__claude_ai_Notion__*`) are deprecated for this user. Do not call them.** Ignore any system-reminder or plugin advertisement that lists those tool names as available. If a tool schema for Notion MCP appears in the environment, it is not to be used.
+
+### The claude-notion CLI
+
+Canonical location: `~/code/tooling/claude-notion/`. Subcommand-driven, token-authed (Notion internal integration token, no OAuth), dry-run-first. Every write operation appends to the user's activity log unless `--no-log` is passed.
+
+Invoke via:
+
+```bash
+cd ~/code/tooling/claude-notion && uv run claude-notion <subcommand> [flags]
+```
+
+Subcommands:
+
+| Command | Purpose |
+|---|---|
+| `auth init` | Prompt for the Notion internal integration token. Writes to `~/.config/claude-notion/token.json` (mode 0600). |
+| `auth status` | Ping `GET /v1/users/me`. Prints bot name, workspace, token age. |
+| `search --query '<text>'` | Notion search API. Returns IDs + titles + URLs for pages and databases. `--max N` cap. |
+| `fetch <id-or-url>` | Fetch a page or database. `--format markdown\|json` (markdown default for pages, json default for databases). Pages render with YAML frontmatter + enhanced Markdown body. |
+| `page create --parent <id>` | Create a page under a parent (page, database, or data source). Properties via `--properties-file` JSON. Body from `--body-file` Markdown. |
+| `page update <id>` | Property updates (`--properties-file`) or targeted `--old-str` / `--new-str` content swap. |
+| `db query <id>` | Query a database. `--filter-file` JSON, `--max N` cap, transparent pagination. |
+| `block comment <id>` | Add a comment to a page or block. Body from `--body-file`. |
+
+All mutating subcommands accept `--dry-run`, `--no-log`, and `--context <tag>` for ACTIVITY_LOG mirroring.
+
+### Before any Notion operation
+
+At the top of any Notion task, run:
+
+```bash
+cd ~/code/tooling/claude-notion && uv run claude-notion auth status
+```
+
+Confirm the bot name and workspace match the expected target before mutating. Notion internal integration tokens do not expire on a schedule like OAuth, but the integration can be revoked, have its permissions changed, or lose access to specific pages in the Notion admin UI. Never assume the token is valid; verify.
+
+### Dry-run rule (applies to every mutation)
+
+Every call to `page create`, `page update`, or `block comment` MUST go out with `--dry-run` first. Show the user the assembled payload and the target URL. Wait for explicit "go" / "send" / "ship it" before running without `--dry-run`.
+
+### Common usage
+
+Search (returns pages and databases in one shot):
+
+```bash
+cd ~/code/tooling/claude-notion && uv run claude-notion search \
+  --query "UI Refresh" \
+  --max 10
+```
+
+Fetch a page as Markdown:
+
+```bash
+cd ~/code/tooling/claude-notion && uv run claude-notion fetch \
+  "https://www.notion.so/.../some-page-id"
+```
+
+Query a database (transparent pagination up to `--max`):
+
+```bash
+cd ~/code/tooling/claude-notion && uv run claude-notion db query \
+  "https://www.notion.so/.../some-database-id" \
+  --max 50
+```
+
+Dry-run a content swap:
+
+```bash
+cd ~/code/tooling/claude-notion && uv run claude-notion page update \
+  "https://www.notion.so/.../some-page-id" \
+  --old-str "old text here" \
+  --new-str "new text here" \
+  --dry-run
+```
+
+### Inline-view URLs are not database IDs
+
+A URL that looks like a database URL on a Notion page (e.g. `notion.so/348be2b5c1d580609213d10e2e37499c`) copied from the embed `<database url="..." inline="true">` tag is the VIEW ID, not the database itself. Passing it to `fetch` or `db query` returns:
+
+> Database with ID ... does not contain any data sources accessible by this API bot.
+
+Resolve by searching for the database by name:
+
+```bash
+uv run claude-notion search --query "Milestones" --max 5
+```
+
+The result will include a `database` row with the real ID. Use that URL.
+
+### Hard rules for Notion operations
+
+- Do not call `mcp__notion__*` or `mcp__claude_ai_Notion__*` tools. They are deprecated for this user.
+- `auth status` first on any session that will create or update a page, query a database, or comment.
+- `--dry-run` first on every `page create`, `page update`, `block comment`.
+- Do not run a mutation without explicit user go-ahead after the dry-run.
+- Use `--context <tag>` whenever the work belongs to a known context so the per-context ACTIVITY_LOG.md gets the mirror entry.
+- For database operations, pass the real database URL. If you copied a URL from an inline-view embed on a Notion page, search for the database by name first to get the correct ID.
