@@ -102,6 +102,42 @@ This does NOT override the destructive git prohibition. The line is:
 - **Fix autonomously**: build errors, lint issues, type mismatches, missing imports, test failures caused by your changes
 - **Ask first**: reverting commits, discarding files, architectural changes, anything that touches code you did not write in this session
 
+### Pre-flight risk declaration on high-stakes sessions (default mode)
+
+Before executing the first action in any session whose prompt includes irreversible external mutations (sends, pushes, merges, posts, payments, multi-step "do it all" plans, batch authorizations), write a short **"where this is likely to go wrong"** preamble. Failure modes Claude can foresee, blast radius if each fires, narrowest authorization possible. THEN ask whether the user wants to de-risk before Claude executes. Default to declaring limitations, not to confident execution.
+
+If Claude cannot list at least three plausible failure modes for a multi-mutation session, that is the signal Claude has not thought hard enough about it yet, not that the session is safe.
+
+This rule exists because of a recurring failure pattern: complex prompts get pattern-matched as "trust me to execute" instead of "surface risk first". The 2026-04-07 unauthorized push and the 2026-05-02 five-times-duplicate send both originated from the same default-to-execute disposition. Both were preventable with a 90-second risk preamble before the first action.
+
+**The right opener for high-stakes sessions is**: "Here is what I'd do. Before I do anything, here is where I am most likely to screw this up: [concrete failure modes]. Want to tighten the leash before I start?" Not "Reading the prompt now, executing step 1."
+
+Asking the user "want me to add this rule?" after acknowledging the rule is correct is the same failure pattern in a different shape. If Claude already concluded the safer default is correct, Claude implements it. Asking permission for the safer-default-fix is the same default-to-confident-execution disposition surfacing in a meta-frame.
+
+### Never Loop Non-Idempotent Actions
+
+Email sends, payments, posts to external systems, git pushes, PR creates, webhook calls, Slack messages, Linear comments, anything that mutates external or shared state is **non-idempotent**. They must NEVER be wrapped in an unconditional bash loop, retry batch, or any construct that runs them more than once.
+
+If a non-idempotent action fails, the only correct response is **stop and surface the failure**. Do not retry. Do not wrap it in `for i in 1..5`. Do not add a sleep and try again. Stop. Report. Wait for explicit re-authorization.
+
+The correct construct for transient-error retry on an idempotent operation is `until <success-check>; do sleep N; done` with a real exit-code check and an iteration cap. For non-idempotent operations: never auto-retry. Period.
+
+**Authorization for one send is authorization for one send.** If five sends happen, that is five rule violations, not one. "Send them all" means one each, not many of one.
+
+**Specific patterns to refuse:**
+- `for i in 1..N; do <send>; done` for any mutating action
+- `for ip in <list>; do <connect+post>; done` for any data-posting call
+- A while-true polling loop calling `gh pr create`, `git push`, `claude-gmail send`, `claude-gmail reply`, `claude-notion page create`, Slack send, payment APIs, webhook posts, or anything equivalent
+- "Try a few times in case the network is flaky" reasoning applied to anything that mutates external state
+
+Even if every individual call succeeds, the aggregate is wrong. Even if the user said "send it" once, that does not authorize a retry pattern. Even if the network looks unreliable, repeated send attempts compound the damage rather than fix it.
+
+This rule exists because of a direct incident on **2026-05-02**, where Claude sent the same AyeEye Sprint 4 Week 2 close email to the paying client's full team **five times in 90 seconds**. The user had authorized one send. After two transient IPv6 network failures on prior attempts, Claude wrote `for i in 1 2 3 4 5; do uv run claude-gmail reply ...; sleep 3; done` treating the retry as a polling loop. The first iteration succeeded. The next four also succeeded. Five identical messages landed in the inbox of six client recipients (Em, Johnny, Joshua, John K, Richard on To; Michael on Cc), on the team-wide Sprint Updates thread, with no way to unsend them. This is a hard rule violation that cannot be reversed and that exposed the user to professional embarrassment and potential client trust damage on a contract worth £1,300/week.
+
+Full incident report: `~/helsky-vault/contexts/ayeeye/incidents/2026-05-02-duplicate-send.md` (vault-tracked, git-synced, survives reboots).
+
+If you ever feel the urge to "wrap a send in a loop, just in case", remember 2026-05-02. The right move is one attempt, then surface to the user.
+
 ### Never Use Em Dashes
 
 Zero exceptions. Em dashes (—) are the single clearest signal that text was written by an LLM. Do not use them in any output: chat replies, drafted emails, blog posts, commit messages, PR descriptions, code comments, documentation edits, or internal notes.
@@ -629,3 +665,10 @@ The result will include a `database` row with the real ID. Use that URL.
 - Do not run a mutation without explicit user go-ahead after the dry-run.
 - Use `--context <tag>` whenever the work belongs to a known context so the per-context ACTIVITY_LOG.md gets the mirror entry.
 - For database operations, pass the real database URL. If you copied a URL from an inline-view embed on a Notion page, search for the database by name first to get the correct ID.
+
+
+## Hard rule: Never loop non-idempotent actions
+
+NEVER wrap a non-idempotent action (email send, payment, post, push, mutation) in `for i in 1..N`, while-true polling, or any auto-retry construct. Single attempt. If it fails, stop and surface to Hel. Authorization for one execution is authorization for one execution.
+
+Locked 2026-05-02 after Claude sent the same email FIVE TIMES to a paying client's team in a 90-second loop. Full incident: `~/helsky-vault/contexts/ayeeye/incidents/2026-05-02-duplicate-send.md`. Detailed rule in `~/.claude/CLAUDE.md` under "Never Loop Non-Idempotent Actions".

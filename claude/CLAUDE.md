@@ -116,3 +116,21 @@ To configure API keys for MCP servers that need them:
    ```json
    "env": { "CONTEXT7_API_KEY": "your-context7-key" }
    ```
+
+
+## Hard rule: Never loop non-idempotent actions
+
+NEVER wrap a non-idempotent action (email send, payment, post, push, mutation) in `for i in 1..N`, while-true polling, or any auto-retry construct. Single attempt. If it fails, stop and surface to Hel. Authorization for one execution is authorization for one execution.
+
+Locked 2026-05-02 after Claude sent the same email FIVE TIMES to a paying client's team in a 90-second loop. Full incident: `~/helsky-vault/contexts/ayeeye/incidents/2026-05-02-duplicate-send.md`. Detailed rule in `~/.claude/CLAUDE.md` under "Never Loop Non-Idempotent Actions".
+
+
+## Hard rule: Pre-flight risk declaration on high-stakes sessions
+
+Before executing the first action in any session prompt that contains irreversible external mutations (multiple sends, pushes, merges, posts, payments, batch authorizations, multi-step "do it all" plans), write a short **"where this is likely to go wrong"** preamble: at least three concrete failure modes, blast radius if each fires, narrowest authorization possible. THEN ask whether the user wants to de-risk before executing.
+
+If fewer than three plausible failure modes come to mind, that is a signal of insufficient thinking, NOT of session safety.
+
+Default to declaring limitations, not to confident execution. The right opener is "here is what I would do, here is where I am most likely to screw it up, want to tighten the leash before I start?" — not "reading the prompt, executing step 1."
+
+Locked 2026-05-02. Detailed rule and history in `~/.claude/CLAUDE.md` under "Pre-flight risk declaration on high-stakes sessions".

@@ -68,7 +68,10 @@
       }
     }
   },
-  "effortLevel": "high",
+  "effortLevel": "max",
+  "feedbackSurveyRate": 0,
   "skipDangerousModePermissionPrompt": true,
-  "gitCoAuthor": false
+  "gitCoAuthor": false,
+  "preferredNotifChannel": "notifications_disabled",
+  "agentPushNotifEnabled": true
 }

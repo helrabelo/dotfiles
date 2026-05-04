@@ -1,10 +1,13 @@
 [user]
 	email = helrabelo@gmail.com
 	name = hel rabelo
-	signinkey = EE2C6A30
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGPzQ74tNYc1Itvc8qbQ8GW+hZdyk8yuHaOA1tIWYEEK
 
 [github]
   user = helrabelo
+
+[includeIf "gitdir:~/code/currents/"]
+	path = ~/.gitconfig-currents
 
 [core]
 	editor = code --wait
@@ -62,7 +65,7 @@ default = current
 [commit]
 	gpgsign = true
 [gpg]
-	program = /opt/homebrew/bin/gpg
+	format = ssh
 [init]
 	defaultBranch = main
 [credential]
@@ -73,3 +76,7 @@ default = current
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/usr/local/bin/gh auth git-credential
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[includeif "gitdir:~/code/planetary/burlington/"]
+	path = /Users/helrabelo/.gitconfig-burlington
