@@ -12,7 +12,10 @@ dotfiles/
 │   └── .zshrc-dev-*    # Development optimizations
 ├── git/                 # Git configuration
 │   ├── .gitconfig      # Git settings
+│   ├── .gitconfig-*    # Per-context identities (currents, planetary, burlington)
 │   └── .gitignore_global
+├── ssh/                 # SSH client config (per-context GitHub host aliases)
+├── 1password/           # 1Password SSH agent config (agent.toml)
 ├── claude/              # Claude AI workflow
 │   ├── CLAUDE.md       # Root instructions
 │   └── .claude/        # Claude settings

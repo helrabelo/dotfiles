@@ -1,0 +1,15 @@
+# Scoped to ~/code/planetary/burlington/ via includeIf in ~/.gitconfig
+# SSH-based commit signing using the 1Password-managed key "GitHub - hel-planetary"
+
+[user]
+	name = Hel Rabelo
+	email = hel@planetary.co
+	signingkey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCzPZjv/6++sicf8VrenfyODC+NWNZMnY+sWZ8ErFUBaYxio8kex+XI7iFS3gmAvI8JOAC6k4ofEhxHgPk1/IWzauLQ3eum5/EjXWZQhABEPmjrYuWep9ZUcIVpdn7uGn2x/bGR99Y1Qjz8GJkiu1ys5JAn2k8eUWQgKA/U8jMVjZB9tnyR1xV+AfRfZXzpDJoIU1iheBOW8FT5RHd4T/1H5hgzWILvg7pvrzRYunCr/01j5uFXo0SDoV33623M1txk1pxM2HE5/oaJwB3j2ucbgTaClII7BV4xhal/s86ub2OVPPec8LsJTiBPHOww24gMcCnj7nVDZzj8ghPQaW9MiffAnRZrZrE82knvLAyH4hv5xDlA+33NuxAiIrtg7Sd/OXczODFM+l0KeCwWVGYHLqHreT7IP56gvy4UwEy+JIQjHFf1FK46iX0OIc1NowiJ60sxs5SrzmtkeDQkk+J2vA3Bmavct7VCXKp0g5EWB+6WxqualUhDgC/Ovr3VuY+C7+/g++iOucFe8p1m0kvRTjfTxAb7s5qDQAoVcUDQCTekbGMcLtK0y36RY04oE86tohbCC6106CqdWJuB5pxxmtQxA3jlLNbUSBEGyW6SIgtnSfNqaBgbV2oQzP56vC8vg0kvIoje7FnRykq5uuZsJrZe+GrS6mC0lxEuZSnFww==
+
+[github]
+	user = hel-planetary
+
+# New clones using plain github.com URLs in the burlingtonstores org
+# automatically get the burlington SSH alias.
+[url "git@github.com-burlington:burlingtonstores/"]
+	insteadOf = git@github.com:burlingtonstores/

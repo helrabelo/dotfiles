@@ -1,0 +1,24 @@
+# Scoped to ~/code/currents/ via includeIf in ~/.gitconfig
+# SSH-based commit signing using the 1Password-managed key "GitHub - hel-currents"
+
+[user]
+	name = Hel Rabelo
+	email = hel@currents.dev
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMX0tuWcG/GgllZ0jbROu9S79wmA6niwRxCjTLPSP8TE
+
+[gpg]
+	format = ssh
+
+[gpg "ssh"]
+	program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+
+[commit]
+	gpgsign = true
+
+[github]
+	user = hel-currents
+
+# New clones using plain github.com URLs in the currents-dev org automatically
+# get the currents SSH alias.
+[url "git@github.com-currents:currents-dev/"]
+	insteadOf = git@github.com:currents-dev/

@@ -1,0 +1,26 @@
+# Scoped to ~/code/planetary/ via includeIf in ~/.gitconfig
+# SSH-based commit signing using the 1Password-managed key "GitHub - hel-planetary"
+# The Burlington subtree is further overridden by ~/.gitconfig-burlington,
+# which loads after this file and wins inside ~/code/planetary/burlington/.
+
+[user]
+	name = Hel Rabelo
+	email = hel@planetary.co
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGGSk7gUqYa6Rwm2qtQpbgwlAfNetz6iyQ8hQdqD4PoI
+
+[gpg]
+	format = ssh
+
+[gpg "ssh"]
+	program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+
+[commit]
+	gpgsign = true
+
+[github]
+	user = hel-planetary
+
+# New clones using plain github.com URLs in the planetary org automatically
+# get the planetary SSH alias. Org-scoped, so Burlington repos are unaffected.
+[url "git@github.com-planetary:planetary/"]
+	insteadOf = git@github.com:planetary/

@@ -1,0 +1,38 @@
+# Added by OrbStack: 'orb' SSH host for Linux machines
+# This only works if it's at the top of ssh_config (before any Host blocks).
+# This won't be added again if you remove it.
+Include ~/.orbstack/ssh/config
+
+Host github.com
+    HostName github.com
+    User git
+    IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+    IdentityFile ~/.ssh/helrabelo@gmail.com.pub
+    IdentitiesOnly yes
+
+Host github.com-burlington
+    HostName github.com
+    User git
+    IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+    IdentityFile ~/.ssh/hel-burlington.pub
+    IdentitiesOnly yes
+
+Host github.com-currents
+    HostName github.com
+    User git
+    IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+    IdentityFile ~/.ssh/hel-currents.pub
+    IdentitiesOnly yes
+
+Host github.com-planetary
+    HostName github.com
+    User git
+    IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+    IdentityFile ~/.ssh/hel-planetary.pub
+    IdentitiesOnly yes
+
+Host macmini
+  HostName hels-Mac-mini.local
+  User helrabelo
+  IdentityFile ~/.ssh/id_ed25519_home
+  IdentitiesOnly yes

@@ -43,6 +43,22 @@ echo ""
 echo "Setting up git configuration..."
 link_file "$DOTFILES_DIR/git/.gitconfig" "$HOME/.gitconfig"
 link_file "$DOTFILES_DIR/git/.gitignore_global" "$HOME/.gitignore_global"
+link_file "$DOTFILES_DIR/git/.gitconfig-currents" "$HOME/.gitconfig-currents"
+link_file "$DOTFILES_DIR/git/.gitconfig-planetary" "$HOME/.gitconfig-planetary"
+link_file "$DOTFILES_DIR/git/.gitconfig-burlington" "$HOME/.gitconfig-burlington"
+
+# SSH configuration
+echo ""
+echo "Setting up SSH configuration..."
+mkdir -p "$HOME/.ssh"
+chmod 700 "$HOME/.ssh"
+link_file "$DOTFILES_DIR/ssh/config" "$HOME/.ssh/config"
+
+# 1Password SSH agent configuration
+echo ""
+echo "Setting up 1Password SSH agent configuration..."
+mkdir -p "$HOME/.config/1Password/ssh"
+link_file "$DOTFILES_DIR/1password/agent.toml" "$HOME/.config/1Password/ssh/agent.toml"
 
 # Claude configuration
 echo ""
