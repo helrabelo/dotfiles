@@ -32,6 +32,10 @@
 vault = "Private"
 
 [[ssh-keys]]
+item = "SSH Key: GitHub - hel-planetary (hel@planetary.co)"
+vault = "Work / Planetary"
+
+[[ssh-keys]]
 item = "SSH Key: GitHub - planetary-hel-burlington (htrjltda@gmail.com)"
 vault = "Work / Planetary"
 
