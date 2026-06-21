@@ -1,0 +1,65 @@
+# Dotfiles bootstrap, managed by mise. Supersedes setup.sh.
+#
+# Phase 2 status: setup.sh stays authoritative until this is proven on the
+# machine. These tasks declare the same symlinks setup.sh creates (minus the
+# retired .zshrc-dev-optimizations) plus the mise config, and a Homebrew sync.
+#
+#   mise run link    # symlink dotfiles into $HOME
+#   mise run brew    # install/sync Homebrew packages from the Brewfile
+#   mise run setup   # link + brew
+#
+# Runtime versions and mise settings live in the global config
+# (mise/config.toml, symlinked to ~/.config/mise/config.toml).
+
+[tasks.brew]
+description = "Install/sync Homebrew packages from the Brewfile"
+run = "brew bundle --file={{config_root}}/Brewfile"
+
+[tasks.link]
+description = "Symlink dotfiles into $HOME (supersedes setup.sh)"
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+DOT="{{config_root}}"
+
+link() {
+  local src="$1" dest="$2"
+  mkdir -p "$(dirname "$dest")"
+  # Back up a real (non-symlink) file before replacing it; never delete.
+  if [ -e "$dest" ] && [ ! -L "$dest" ]; then
+    echo "  backing up $dest -> $dest.backup"
+    mv "$dest" "$dest.backup"
+  fi
+  ln -sfn "$src" "$dest"
+  echo "  linked $dest -> $src"
+}
+
+link "$DOT/zsh/.zshrc"                "$HOME/.zshrc"
+link "$DOT/zsh/.zprofile"             "$HOME/.zprofile"
+link "$DOT/zsh/.zshrc-tools"          "$HOME/.zshrc-tools"
+link "$DOT/zsh/.helsky-vault-aliases" "$HOME/.helsky-vault-aliases"
+link "$DOT/git/.gitconfig"            "$HOME/.gitconfig"
+link "$DOT/git/.gitignore_global"     "$HOME/.gitignore_global"
+link "$DOT/git/.gitconfig-currents"   "$HOME/.gitconfig-currents"
+link "$DOT/git/.gitconfig-planetary"  "$HOME/.gitconfig-planetary"
+link "$DOT/git/.gitconfig-burlington" "$HOME/.gitconfig-burlington"
+link "$DOT/ssh/config"                "$HOME/.ssh/config"
+link "$DOT/1password/agent.toml"      "$HOME/.config/1Password/ssh/agent.toml"
+link "$DOT/claude/CLAUDE.md"          "$HOME/CLAUDE.md"
+link "$DOT/claude/.claude"            "$HOME/.claude"
+link "$DOT/ghostty/config"            "$HOME/.config/ghostty/config"
+link "$DOT/nvim"                      "$HOME/.config/nvim"
+link "$DOT/mise/config.toml"          "$HOME/.config/mise/config.toml"
+link "$DOT/mise/mise.lock"            "$HOME/.config/mise/mise.lock"
+
+mkdir -p "$HOME/bin"
+for s in "$DOT"/scripts/*.sh; do
+  [ -f "$s" ] || continue
+  link "$s" "$HOME/bin/$(basename "$s")"
+  chmod +x "$HOME/bin/$(basename "$s")"
+done
+'''
+
+[tasks.setup]
+description = "Full bootstrap: symlink dotfiles + sync Homebrew packages"
+depends = ["link", "brew"]
