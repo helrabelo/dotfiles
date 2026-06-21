@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# DEPRECATED (Phase 2, 2026-06-21): superseded by mise (see mise.toml).
+#   mise run setup    # symlink dotfiles + sync Homebrew packages
+#   mise run link     # symlinks only
+# Kept until the mise bootstrap is proven on a fresh machine. Note: this script
+# does NOT create the mise config symlinks; prefer `mise run link`.
+#
 # Dotfiles Setup Script
 # This script creates symlinks from home directory to dotfiles repo
 

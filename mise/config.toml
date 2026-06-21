@@ -1,0 +1,18 @@
+# Global mise configuration (symlinked to ~/.config/mise/config.toml).
+#
+# Phase 2 of the dotfiles rebuild: mise owns the runtime versions, but it does
+# NOT yet own the interactive shell. nvm and rbenv remain installed and active
+# until Phase 3 retires their shell init. mise is verified via isolated
+# `mise exec` / `mise activate` subshells only.
+#
+# Runtime versions match new-mac-setup.sh (node 22, ruby 3.4.1).
+
+[tools]
+node = "22"
+ruby = "3.4.1"
+
+[settings]
+# Keep existing .nvmrc / .node-version pinned projects resolving under mise.
+idiomatic_version_file_enable_tools = ["node"]
+# Pin exact resolved versions into mise.lock for reproducible bootstraps.
+lockfile = true
