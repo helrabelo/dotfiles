@@ -40,7 +40,6 @@ link_file() {
 echo "Setting up shell configuration..."
 link_file "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
 link_file "$DOTFILES_DIR/zsh/.zprofile" "$HOME/.zprofile"
-link_file "$DOTFILES_DIR/zsh/.zshrc-dev-optimizations" "$HOME/.zshrc-dev-optimizations"
 link_file "$DOTFILES_DIR/zsh/.zshrc-tools" "$HOME/.zshrc-tools"
 link_file "$DOTFILES_DIR/zsh/.helsky-vault-aliases" "$HOME/.helsky-vault-aliases"
 

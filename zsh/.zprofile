@@ -1,20 +1,14 @@
+# Login shell profile.
+#
+# Dropped vs the old .zprofile: stale Python.framework 3.12/3.10 PATH prepends
+# and the nvm loader (mise now owns node).
 
-# Setting PATH for Python 3.12
-# The original version is saved in .zprofile.pysave
-PATH="/Library/Frameworks/Python.framework/Versions/3.12/bin:${PATH}"
-export PATH
-
-# Setting PATH for Python 3.10
-# The original version is saved in .zprofile.pysave
-PATH="/Library/Frameworks/Python.framework/Versions/3.10/bin:${PATH}"
-export PATH
-
+# Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# Added by OrbStack: command-line tools and integration
-# This won't be added again if you remove it.
+# OrbStack: command-line tools and integration
 source ~/.orbstack/shell/init.zsh 2>/dev/null || :
-# Load nvm for non-interactive shells
-export NVM_DIR="/Users/helrabelo/.nvm"
-[ -s "/Users/helrabelo/.nvm/nvm.sh" ] && . "/Users/helrabelo/.nvm/nvm.sh"
-[ -s "/Users/helrabelo/.nvm/bash_completion" ] && . "/Users/helrabelo/.nvm/bash_completion"
+
+# mise shims for non-interactive shells (interactive shells get the full
+# `mise activate` in conf.d/tools.zsh). Replaces nvm's old non-interactive role.
+[ -d "$HOME/.local/share/mise/shims" ] && export PATH="$HOME/.local/share/mise/shims:$PATH"
