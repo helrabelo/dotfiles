@@ -51,6 +51,7 @@ link "$DOT/ghostty/config"            "$HOME/.config/ghostty/config"
 link "$DOT/nvim"                      "$HOME/.config/nvim"
 link "$DOT/mise/config.toml"          "$HOME/.config/mise/config.toml"
 link "$DOT/mise/mise.lock"            "$HOME/.config/mise/mise.lock"
+link "$DOT/starship/starship.toml"    "$HOME/.config/starship.toml"
 
 mkdir -p "$HOME/bin"
 for s in "$DOT"/scripts/*.sh; do

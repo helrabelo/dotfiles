@@ -1,0 +1,50 @@
+# starship prompt. Replaces oh-my-zsh + spaceship.
+#
+# Shows: user, directory, git branch + status, the ACTIVE git commit identity
+# (the per-context safety rail; changes per client via includeIf), node version,
+# and command duration. Nerd-font glyphs avoided so it renders in any font.
+
+add_newline = false
+
+format = "$username$directory$git_branch$git_status${custom.gitid}$nodejs$cmd_duration$character"
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+
+[username]
+show_always = true
+format = "[$user]($style) "
+style_user = "bold blue"
+
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+style = "bold cyan"
+
+[git_branch]
+format = "[$branch]($style) "
+style = "bold magenta"
+
+[git_status]
+style = "yellow"
+
+# Active commit identity: the email git will sign/author as, here and now.
+# Only shown inside a git work tree. This is the "which client am I?" guard.
+[custom.gitid]
+description = "Active git commit identity (per-context safety rail)"
+command = "git config user.email"
+when = "git rev-parse --is-inside-work-tree"
+format = "[as $output]($style) "
+style = "bold yellow"
+
+[nodejs]
+format = "[via node $version]($style) "
+detect_files = ["package.json", ".nvmrc", ".node-version"]
+detect_extensions = []
+style = "green"
+
+[cmd_duration]
+min_time = 2000
+format = "[$duration]($style) "
+style = "yellow"
