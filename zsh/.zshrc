@@ -8,7 +8,7 @@
 ZSH_DOTDIR="${${(%):-%x}:A:h}"
 
 # Source modules in dependency order (env before path; tools before keybindings).
-for _mod in env path tools functions aliases keybindings context; do
+for _mod in env path tools functions worktree aliases keybindings context; do
   [ -r "$ZSH_DOTDIR/conf.d/$_mod.zsh" ] && source "$ZSH_DOTDIR/conf.d/$_mod.zsh"
 done
 unset _mod
