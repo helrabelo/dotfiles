@@ -17,12 +17,14 @@ claude/.claude/statsig/
 claude/.claude/ide/
 claude/.claude/history.jsonl
 claude/.claude/stats-cache.json
+claude/.claude/settings.local.json
 claude/.claude/plugins/cache/
 claude/.claude/plugins/marketplaces/
 claude/.claude/plugins/install-counts-cache.json
 claude/.claude/plugins/installed_plugins.json
 claude/.claude/plugins/known_marketplaces.json
 claude/.claude/plugins/blocklist.json
+claude/.claude/plugins/config.json
 claude/.claude/mcp-needs-auth-cache.json
 claude/.claude/backups/
 claude/.claude/sessions/
