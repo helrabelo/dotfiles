@@ -1,7 +1,6 @@
 # Aliases.
 
-# Claude Code (Phase 4 will scope this per context)
-alias c="claude --dangerously-skip-permissions --verbose"
+# Claude Code: the `c` launcher is a context-scoped function in context.zsh.
 
 # Helsky vault logging aliases
 [ -r "$HOME/.helsky-vault-aliases" ] && source "$HOME/.helsky-vault-aliases"
