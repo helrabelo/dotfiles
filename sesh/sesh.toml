@@ -1,0 +1,19 @@
+# sesh sessions for the context model. `sesh connect <name>` (or the tmux
+# prefix+s picker, or the context functions in conf.d/context.zsh) attaches to
+# or creates these, each rooted at its workspace.
+
+[[session]]
+name = "default"
+path = "~"
+
+[[session]]
+name = "ayeeye"
+path = "~/code/ayeeye"
+
+[[session]]
+name = "currents"
+path = "~/code/currents"
+
+[[session]]
+name = "planetary"
+path = "~/code/planetary"

@@ -52,6 +52,8 @@ link "$DOT/nvim"                      "$HOME/.config/nvim"
 link "$DOT/mise/config.toml"          "$HOME/.config/mise/config.toml"
 link "$DOT/mise/mise.lock"            "$HOME/.config/mise/mise.lock"
 link "$DOT/starship/starship.toml"    "$HOME/.config/starship.toml"
+link "$DOT/tmux/tmux.conf"            "$HOME/.config/tmux/tmux.conf"
+link "$DOT/sesh/sesh.toml"            "$HOME/.config/sesh/sesh.toml"
 
 mkdir -p "$HOME/bin"
 for s in "$DOT"/scripts/*.sh; do
