@@ -28,6 +28,9 @@ claude/.claude/backups/
 claude/.claude/sessions/
 claude/.claude/downloads/
 claude/.claude/session-env/
+claude/.claude/.last-cleanup
+claude/.claude/.last-update-result.json
+claude/.claude/plugins/.last_inuse_sweep
 .claude/projects/
 .claude/shell-snapshots/
 

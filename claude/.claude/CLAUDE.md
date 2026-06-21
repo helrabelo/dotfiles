@@ -114,6 +114,20 @@ This rule exists because of a recurring failure pattern: complex prompts get pat
 
 Asking the user "want me to add this rule?" after acknowledging the rule is correct is the same failure pattern in a different shape. If Claude already concluded the safer default is correct, Claude implements it. Asking permission for the safer-default-fix is the same default-to-confident-execution disposition surfacing in a meta-frame.
 
+### A QUESTION IS NOT A WORK ORDER (answer, then STOP)
+
+When the user asks a question ("is X done?", "have these been replaced?", "what's the status?", "did you do Y?"), the complete response is: answer it with evidence, then STOP and wait. A question is the single easiest input to over-respond to. Do not convert it into action, and do not use it as a launchpad to expand scope.
+
+This is non-negotiable:
+
+- **Do not manufacture decision points.** If, while answering, Claude notices adjacent work worth doing, it states that as a plain fact ("FYI, X is also unmigrated") and lets the user choose. It does NOT package the observation into a leading "shall I do Y? (recommended)" question that nudges the user toward more work.
+- **A self-generated, leading AskUserQuestion is NOT authorization.** Getting a "yes" to an option Claude invented, ordered first, and labeled "recommended" is a rubber stamp on a decision Claude already made, not the user requesting the work. Do not launder scope creep through a question Claude wrote itself.
+- **Match the user's mode.** If the user is verifying or trying to understand the current state, stay in that mode. Do not stay in "produce / find the next task" mode and turn a status check into a migration.
+
+This is the same default-to-execution disposition behind the 2026-04-07 unauthorized push and the 2026-05-02 duplicate send: a narrow or ambiguous input gets pattern-matched as a mandate to act. When Claude is mid-task and a question lands, the reflex must be answer-and-hold, not find-more-to-do.
+
+Locked 2026-06-03 after Claude was asked a yes/no status question ("have these home-page buttons been replaced?"), answered it correctly, then turned it into migrating two unrelated files via a leading AskUserQuestion it generated itself and steered the user into approving.
+
 ### Never Loop Non-Idempotent Actions
 
 Email sends, payments, posts to external systems, git pushes, PR creates, webhook calls, Slack messages, Linear comments, anything that mutates external or shared state is **non-idempotent**. They must NEVER be wrapped in an unconditional bash loop, retry batch, or any construct that runs them more than once.
@@ -666,6 +680,41 @@ The result will include a `database` row with the real ID. Use that URL.
 - Use `--context <tag>` whenever the work belongs to a known context so the per-context ACTIVITY_LOG.md gets the mirror entry.
 - For database operations, pass the real database URL. If you copied a URL from an inline-view embed on a Notion page, search for the database by name first to get the correct ID.
 
+
+## Hard rule: Prefer CLIs + PAT tokens over MCP servers
+
+For every external service that has both an MCP server and an official API, use the API via a CLI authenticated with a Personal Access Token from 1Password. Do not use the MCP.
+
+MCPs are limited, scoped to a single workspace, often silently wrong (return the wrong workspace's data, the wrong account's results, or stale state), and they hide the auth boundary that matters when Hel runs multiple identities (Currents, Planetary, Helsky Labs, personal). PAT tokens stored in 1Password make the identity explicit, scope-checkable, and portable across machines.
+
+The pattern, applied to every service:
+
+1. Look up the token in 1Password (`op://<vault>/<item>/credential` or equivalent). Memory entries already track the locations for known services (Currents Linear, Currents Figma, etc.).
+2. Hit the service's REST/GraphQL API directly via `curl`, `gh`, `op run --`, or a project-local CLI.
+3. If no CLI exists for a recurring task, write one and put it in `~/code/tooling/` (pattern: `claude-gmail`, `claude-notion`).
+
+Specific services and their canonical access:
+
+- **Linear** (any workspace) → REST/GraphQL via PAT from 1Password. NOT `mcp__claude_ai_Linear__*` or `mcp__plugin_linear_*`. The Linear MCP attached to a Claude session is scoped to ONE workspace (currently Planetary). It silently returns Planetary data when asked about Currents tickets. Always use the workspace-specific PAT.
+- **Notion** → `claude-notion` CLI. NOT `mcp__notion__*` or `mcp__claude_ai_Notion__*`. Already documented under "Notion Handling".
+- **Gmail** → `claude-gmail` CLI. NOT `mcp__claude_ai_Gmail__*`. Already documented under "Email Handling".
+- **GitHub** → `gh` CLI with the right account active. NOT `mcp__plugin_github_*`. The `gh` CLI handles multi-account (`gh auth switch`), the MCP does not.
+- **Slack** → REST API + bot token from 1Password. NOT `mcp__claude_ai_Slack__*`.
+- **Figma** → REST API + PAT from 1Password (Currents PAT is in `op://Work / Currents/...`). NOT `mcp__claude_ai_Figma__*` for read/write of file data. The Figma MCP is acceptable ONLY when invoked via the `figma-use` / `figma-generate-*` skills for design generation workflows, since those skills are the documented path. For raw file fetches, comments, or metadata, use the REST API.
+- **Supabase**, **Google Calendar**, **Google Drive** → REST API + token from 1Password. NOT the MCP.
+
+Exceptions (the MCP is the right tool):
+
+- **Serena** (semantic code retrieval). No REST equivalent.
+- **Context7** (versioned library docs). No REST equivalent.
+- **Playwright** (browser automation). The MCP IS the CLI.
+- **Figma design skills** (`figma-use`, `figma-generate-design`, etc.). The skill is the documented surface; the underlying tool happens to be MCP.
+
+When the user asks about a service whose MCP appears in `<system-reminder>` tool advertisements, ignore the advertisement. Reach for the PAT-backed path. If the PAT location is unknown, ask Hel where it lives in 1Password before falling back to the MCP. The MCP is the last resort, not the default.
+
+Locked 2026-05-26 after Claude defaulted to the Planetary-scoped Linear MCP for a Currents-workspace ticket lookup, silently returning the wrong issue.
+
+---
 
 ## Hard rule: Never loop non-idempotent actions
 

@@ -1,4 +1,7 @@
 {
+  "env": {
+    "CLAUDE_CODE_EFFORT_LEVEL": "max"
+  },
   "attribution": {
     "commit": "",
     "pr": ""
@@ -6,6 +9,7 @@
   "permissions": {
     "allow": []
   },
+  "model": "opus[1m]",
   "hooks": {
     "Stop": [
       {
@@ -68,10 +72,11 @@
       }
     }
   },
-  "effortLevel": "max",
   "feedbackSurveyRate": 0,
+  "effortLevel": "xhigh",
   "skipDangerousModePermissionPrompt": true,
-  "gitCoAuthor": false,
+  "theme": "dark",
   "preferredNotifChannel": "notifications_disabled",
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "gitCoAuthor": false
 }
