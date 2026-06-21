@@ -84,6 +84,8 @@ The vault is also the second brain (Obsidian-compatible): `inbox/` (process week
 
 Active: Helsky Labs `~/code/helsky-labs/`; helrabelo.dev `~/code/personal/helrabelo.dev`; DTF `~/code/planetary/din-tai-fung-website`; The Well `~/code/planetary/the-well`.
 
+**Config note:** `~/.claude` is a directory symlink into `~/code/dotfiles/claude/.claude` (this dotfiles repo), so editing files there edits the version-controlled file directly. Do not re-symlink `~/.claude/CLAUDE.md` to that path; it creates a self-referential loop. `~/.claude/projects/` (including auto-memory) and `~/.claude/backups/` are gitignored, so memory is per-machine.
+
 ## Tooling: prefer PAT-backed CLIs over MCP
 
 For every service with both an MCP and an official API, use the API via a CLI authed with a PAT from 1Password. MCPs are scoped to one workspace and silently return the wrong identity's data. Make the auth boundary explicit. (Locked 2026-05-26 after the Planetary-scoped Linear MCP returned the wrong workspace's issue.)
