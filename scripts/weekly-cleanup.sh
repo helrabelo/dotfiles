@@ -37,7 +37,7 @@ find /Users/helrabelo/Code -name ".git" -type d | while read git_dir; do
     repo_dir=$(dirname "$git_dir")
     repo_name=$(basename "$repo_dir")
     echo "  Maintaining: $repo_name"
-    cd "$repo_dir"
+    cd "$repo_dir" || continue
     git gc --auto 2>/dev/null
     git prune 2>/dev/null
 done
