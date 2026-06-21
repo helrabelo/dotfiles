@@ -30,3 +30,6 @@ jspm_packages/
 # Next.js build output
 .next
 outCLAUDE.md
+
+# Git worktrees (dotfiles convention: <repo>/.worktrees/<branch>)
+.worktrees/

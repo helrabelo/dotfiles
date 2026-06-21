@@ -31,10 +31,10 @@ dotfiles/
 
 ```bash
 # Clone the repo
-git clone https://github.com/helrabelo/dotfiles.git ~/Code/dotfiles
+git clone https://github.com/helrabelo/dotfiles.git ~/code/dotfiles
 
 # Run setup
-cd ~/Code/dotfiles
+cd ~/code/dotfiles
 chmod +x setup.sh
 ./setup.sh
 ```
@@ -45,16 +45,18 @@ If you prefer to manually link specific files:
 
 ```bash
 # Example: Link zshrc
-ln -s ~/Code/dotfiles/zsh/.zshrc ~/.zshrc
+ln -s ~/code/dotfiles/zsh/.zshrc ~/.zshrc
 ```
 
 ## What's Included
 
 ### Shell (Zsh)
-- Aliases for quick navigation (`work`, `planet`, `plain`, `personal`)
-- Project shortcuts (`dtf`, `portal`, `api`, `wishare`)
-- Development utilities (`clean-npm`, `git-status-all`)
-- Performance optimizations
+- zinit plugin manager (fast-syntax-highlighting, autosuggestions, completions)
+- VS Code-style keybindings (Option+arrow word nav, Ctrl+A/E, kill-line, history search)
+- `pi` clipboard-image paste helper
+- `c` alias for Claude Code
+- zoxide (smarter `cd`) + direnv hooks
+- Helsky vault logging aliases (via `~/.helsky-vault-aliases`)
 
 ### Git
 - Global gitignore for common files
@@ -84,7 +86,7 @@ ln -s ~/Code/dotfiles/zsh/.zshrc ~/.zshrc
 ## Customization
 
 After installation, you can customize:
-1. Edit files in `~/Code/dotfiles/`
+1. Edit files in `~/code/dotfiles/`
 2. Changes will reflect immediately (they're symlinked)
 3. Commit and push your changes
 
