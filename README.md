@@ -62,6 +62,7 @@ ln -s ~/code/dotfiles/zsh/.zshrc ~/.zshrc
 - Global gitignore for common files
 - Useful aliases and configurations
 - Commit signing setup
+- `delta`-rendered diffs and a review workflow (see `docs/diff-workflow.md`)
 
 ### Claude
 - Root-level CLAUDE.md for AI pair programming
