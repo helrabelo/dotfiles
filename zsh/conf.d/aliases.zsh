@@ -10,3 +10,8 @@
 alias clean-npm="find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +"
 alias clean-ds="find . -name '.DS_Store' -type f -delete"
 alias git-status-all="find . -name .git -type d -prune -exec sh -c 'cd \"\${0%/.git}\" && echo \"===== \$(basename \"\$(pwd)\") =====\" && git status -s' {} \;"
+
+# Diff review (see docs/diff-workflow.md). `lg` is lazygit, standalone; it is
+# distinct from the `git lg` pretty-log alias in git/.gitconfig.
+alias lg="lazygit"
+alias gap="git add -p"
