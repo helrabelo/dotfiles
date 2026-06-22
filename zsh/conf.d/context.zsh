@@ -17,6 +17,16 @@ typeset -gA HELSKY_CTX_ROOTS=(
   planetary "$HOME/code/planetary"
 )
 
+# Per-context background tint (subtle, Dracula-compatible darks). Painted onto
+# the terminal by _ctx_paint: a tmux window background inside tmux, OSC 11 when
+# bare. The vivid status-chip colors are separate and live in tmux/tmux.conf.
+typeset -gA HELSKY_CTX_BG=(
+  default   "#282a36"
+  ayeeye    "#1e2230"
+  currents  "#1f2a24"
+  planetary "#2d1f22"
+)
+
 # Clear per-context state before switching, so nothing leaks between contexts.
 _cleanup_ctx() {
   unset HELSKY_CONTEXT
@@ -42,6 +52,22 @@ _ctx_env() {
   fi
 }
 
+# Paint the active context's background tint onto the terminal. Inside tmux we
+# set the window background (visible behind the shell; nvim/less keep their own
+# bg). Bare, we emit OSC 11 so Ghostty tints the surface directly. Bare shells
+# are always the "default" context today, so the OSC path mostly just keeps the
+# neutral Dracula bg; the real per-context tint happens inside tmux.
+_ctx_paint() {
+  local ctx="${HELSKY_CONTEXT:-default}"
+  local bg="${HELSKY_CTX_BG[$ctx]:-#282a36}"
+  if [[ -n "$TMUX" ]]; then
+    tmux set-option -w window-style        "bg=$bg" 2>/dev/null
+    tmux set-option -w window-active-style "bg=$bg" 2>/dev/null
+  else
+    printf '\e]11;%s\a' "$bg"
+  fi
+}
+
 # Map the current tmux session name -> context, so every new pane inherits it.
 _auto_activate_context() {
   local ctx="default"
@@ -53,6 +79,7 @@ _auto_activate_context() {
     esac
   fi
   _ctx_env "$ctx" init
+  _ctx_paint
 }
 
 # Enter (or create) the tmux session for a context, preferring sesh.
